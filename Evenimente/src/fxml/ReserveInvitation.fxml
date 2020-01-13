@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TitledPane animated="false" layoutX="-783.0" layoutY="-441.0" prefHeight="557.0" prefWidth="846.0" text="untitled">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Label layoutX="80.0" layoutY="101.0" text="Secret Code" />
+                  <TextField layoutX="219.0" layoutY="96.0" />
+                  <Hyperlink layoutX="75.0" layoutY="42.0" text="Open Instructions" />
+                  <Button layoutX="334.0" layoutY="184.0" mnemonicParsing="false" text="Reserve" />
+                  <Button layoutX="160.0" layoutY="184.0" mnemonicParsing="false" text="Decline Invitation" />
+               </children>
+            </AnchorPane>
+        </content>
+      </TitledPane>
+   </children>
+</AnchorPane>

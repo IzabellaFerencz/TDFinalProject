@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="295.0" prefWidth="390.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+   <children>
+      <Label layoutX="54.0" layoutY="24.0" prefHeight="38.0" prefWidth="214.0" text="Evenimentele Tale" textAlignment="CENTER" textFill="#1c109a">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <TableView layoutX="13.0" layoutY="78.0" prefHeight="162.0" prefWidth="374.0">
+        <columns>
+          <TableColumn prefWidth="75.0" text="Denumire" />
+          <TableColumn prefWidth="75.0" text="Locuri Disponibile" />
+            <TableColumn prefWidth="75.0" text="Locatie" />
+            <TableColumn prefWidth="75.0" text="Data&amp;Ora" />
+            <TableColumn prefWidth="75.0" text="Nr Invitatii" />
+        </columns>
+      </TableView>
+      <Button layoutX="28.0" layoutY="256.0" mnemonicParsing="false" text="Back" />
+      <Button layoutX="100.0" layoutY="256.0" mnemonicParsing="false" text="Editeaza" />
+      <Button layoutX="200.0" layoutY="256.0" mnemonicParsing="false" text="Sterge" />
+      <Button layoutX="268.0" layoutY="256.0" mnemonicParsing="false" text="Participanti" />
+   </children>
+</AnchorPane>

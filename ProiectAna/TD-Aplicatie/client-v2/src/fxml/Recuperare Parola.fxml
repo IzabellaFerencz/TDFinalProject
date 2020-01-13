@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="290.0" prefWidth="423.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+   <children>
+      <PasswordField layoutX="167.0" layoutY="107.0" />
+      <TextField layoutX="167.0" layoutY="68.0" />
+      <Label layoutX="128.0" layoutY="25.0" prefHeight="25.0" prefWidth="139.0" text="Recuperare Parola">
+         <font>
+            <Font name="System Bold" size="11.0" />
+         </font>
+      </Label>
+      <Button layoutX="140.0" layoutY="168.0" mnemonicParsing="false" text="Schimbare Parola" textFill="#c3230e">
+         <font>
+            <Font name="System Bold Italic" size="13.0" />
+         </font>
+      </Button>
+      <Button layoutX="31.0" layoutY="223.0" mnemonicParsing="false" text="Back" />
+      <Label layoutX="38.0" layoutY="72.0" prefHeight="17.0" prefWidth="64.0" text="Parola" />
+      <Label layoutX="31.0" layoutY="111.0" text="Confirmare Parola" />
+   </children>
+</AnchorPane>

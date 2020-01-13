@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+   <children>
+      <ScrollPane layoutX="-495.0" layoutY="-562.0" prefHeight="506.0" prefWidth="495.0">
+         <content>
+            <Pane prefHeight="502.0" prefWidth="491.0">
+               <children>
+                  <Label layoutX="46.0" layoutY="76.0" text="Name" />
+                  <Label layoutX="50.0" layoutY="118.0" text="Location" />
+                  <Label layoutX="47.0" layoutY="157.0" text="DateTime" />
+                  <Label layoutX="45.0" layoutY="194.0" text="NrOfSeats" />
+                  <Label layoutX="48.0" layoutY="230.0" text="NrOfInvites" />
+                  <TableView layoutX="46.0" layoutY="267.0" prefHeight="200.0" prefWidth="375.0">
+                    <columns>
+                      <TableColumn prefWidth="74.0" text="Id" />
+                      <TableColumn prefWidth="164.0" text="Username" />
+                        <TableColumn prefWidth="134.0" text="Status" />
+                    </columns>
+                  </TableView>
+                  <TextField layoutX="171.0" layoutY="71.0" />
+                  <TextField layoutX="171.0" layoutY="113.0" />
+                  <TextField layoutX="171.0" layoutY="189.0" />
+                  <TextField disable="true" layoutX="171.0" layoutY="225.0" />
+                  <DatePicker layoutX="171.0" layoutY="152.0" />
+                  <Button layoutX="389.0" layoutY="34.0" mnemonicParsing="false" text="Update" />
+               </children>
+            </Pane>
+         </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>
