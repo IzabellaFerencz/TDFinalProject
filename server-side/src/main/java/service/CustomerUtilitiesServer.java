@@ -7,10 +7,14 @@ import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.google.gson.Gson;
 
+import dao.EventDAO;
 import dao.UserDAO;
+import model.Event;
 import model.User;
 
 public class CustomerUtilitiesServer implements Runnable
@@ -83,6 +87,24 @@ public class CustomerUtilitiesServer implements Runnable
 						ok = true;
 						break;
 
+					case "getEvents":
+						EventDAO dtot= new EventDAO(Event.class);
+						List<Event> list = new ArrayList<Event>();
+						list=dtot.findAll();
+					
+						if (list.size() > 0)
+						{
+							string = gson.toJson(list);
+							System.out.println("EVENTS:");
+							System.out.println(list.toString());
+						} 
+						else
+						{
+							string = "Fail";
+						}
+						
+						ok = true;
+						break; 
 					default:
 						break;
 				}

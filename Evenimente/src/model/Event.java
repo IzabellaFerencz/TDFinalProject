@@ -1,40 +1,20 @@
 package model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+public class Event 
+{
 
-@Entity
-@Table(name = "event")
-public class Event {
-
-	@Id
-	@Column(name = "idEvent")
 	private int idEvent;
 
-	@Column(name = "name")
 	private String name;
 
-	@Column(name = "location")
 	private String location;
 
-	@Column(name = "datetime")
 	private String datetime;
 
-	@Column(name = "nrofseats")
 	private int nrOfSeats;
 
-	@Column(name = "nrofinvites")
 	private int nrOfInvites;
 
-	@Column(name = "idOrganizer")
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "userId")
 	private int idOrganizer;
 
 	public int getIdEvent()
@@ -105,12 +85,5 @@ public class Event {
 	public void setIdOrganizer(int idOrganizer)
 	{
 		this.idOrganizer = idOrganizer;
-	}
-
-	@Override
-	public String toString()
-	{
-		return "Event [idEvent=" + idEvent + ", name=" + name + ", location=" + location + ", datetime=" + datetime
-				+ ", nrOfSeats=" + nrOfSeats + ", nrOfInvites=" + nrOfInvites + ", idOrganizer=" + idOrganizer + "]";
 	}
 }
