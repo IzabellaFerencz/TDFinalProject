@@ -14,7 +14,7 @@ public class UserDAO extends BasicDAO<User> {
 		super(eClass);
 	}
 
-	public User  findByUsernameAndPassword(String username, String password) 
+	public User findByUsernameAndPassword(String username, String password) 
 	{
 		EntityManager em = EntityManagerUtil.getEntityManagerFactory().createEntityManager();
 		try 
@@ -25,16 +25,15 @@ public class UserDAO extends BasicDAO<User> {
 			cq.select(root);
 			cq.where(cb.equal(root.get("username"), username), cb.equal(root.get("password"),password));
 			User returnValues = (User) em.createQuery(cq).getSingleResult();
+			em.close();
 			return returnValues;
 		} 
 		catch (RuntimeException e) 
 		{
-			em.getTransaction().rollback();
-		} 
-		finally
-		{
+			//em.getTransaction().rollback();
 			em.close();
-		}
-		return null;
+			return null;
+		} 
+
 	}
 }

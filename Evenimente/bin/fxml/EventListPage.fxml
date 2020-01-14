@@ -1,30 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.*?>
 
-
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+<GridPane alignment="center" hgap="10" prefHeight="311.0" prefWidth="331.0" vgap="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="controller.EventsController">
+<padding><Insets bottom="10" left="25" right="25" top="25" /></padding>
    <children>
-      <ScrollPane layoutX="-570.0" layoutY="-582.0" prefHeight="527.0" prefWidth="526.0">
-         <content>
-            <Pane prefHeight="524.0" prefWidth="524.0">
-               <children>
-                  <Label graphicTextGap="14.0" layoutX="228.0" layoutY="49.0" text="Events" />
-                  <TableView layoutX="22.0" layoutY="138.0" prefHeight="200.0" prefWidth="464.0">
-                    <columns>
-                      <TableColumn prefWidth="75.0" text="Id" />
-                      <TableColumn prefWidth="75.0" text="Name" />
-                        <TableColumn prefWidth="75.0" text="Location" />
-                        <TableColumn prefWidth="102.0" text="Date" />
-                        <TableColumn prefWidth="136.0" text="Status" />
-                    </columns>
-                  </TableView>
-               </children>
-            </Pane>
-         </content>
-      </ScrollPane>
+   	<Text text="Welcome" GridPane.columnSpan="2" />
+       
    </children>
-</AnchorPane>
+   <columnConstraints>
+      <ColumnConstraints />
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
+</GridPane>
+

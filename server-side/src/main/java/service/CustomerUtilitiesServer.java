@@ -55,8 +55,16 @@ public class CustomerUtilitiesServer implements Runnable
 					case "register":
 						user = gson.fromJson(data_server, User.class);
 						dto = new UserDAO(User.class);
-						dto.create(user);
-						string = "The user has successfully registered!";
+						boolean result = dto.create(user);
+						if(result == true)
+						{
+							string = "Success";
+						}
+						else
+						{
+							string = "Fail";
+						}
+						
 						ok = true;
 						break;
 
@@ -66,11 +74,11 @@ public class CustomerUtilitiesServer implements Runnable
 						User u = dto.findByUsernameAndPassword(user.getUsername(), user.getPassword());
 						if (u != null)
 						{
-							string = "The user successfully logged in!";
+							string = "Success";
 						}
 						else
 						{
-							string = "";
+							string = "Fail";
 						}
 						ok = true;
 						break;
@@ -81,7 +89,7 @@ public class CustomerUtilitiesServer implements Runnable
 
 				if (ok == true) 
 				{
-					bufferedOutputWriter.write("    " + string);
+					bufferedOutputWriter.write(string);
 					bufferedOutputWriter.newLine();
 					bufferedOutputWriter.flush();
 				}

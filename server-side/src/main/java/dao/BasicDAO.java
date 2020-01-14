@@ -14,7 +14,7 @@ public abstract class BasicDAO<T>
 	}
 
 
-	public void create(T entity) 
+	public boolean create(T entity) 
 	{
 		EntityManager em = EntityManagerUtil.getEntityManagerFactory().createEntityManager();
 		try 
@@ -22,10 +22,12 @@ public abstract class BasicDAO<T>
 			em.getTransaction().begin();
 			em.persist(entity);
 			em.getTransaction().commit();
+			return true;
 		} 
 		catch (RuntimeException e) 
 		{
 			em.getTransaction().rollback();
+			return false;
 		} 
 		finally 
 		{

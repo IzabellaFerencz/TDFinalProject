@@ -8,7 +8,6 @@ import java.util.concurrent.Future;
 
 import application.SocketClientCallable;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -20,29 +19,46 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import application.SocketClientCallable;
-
-public class UserController 
+public class RegisterController
 {
 	@FXML
 	private Button btnLogIn;
 	@FXML
 	private TextField usernameField;
 	@FXML
+	private TextField emailField;
+	@FXML
 	private PasswordField passwordField;
+	@FXML
+	private PasswordField confPasswordField;
 	@FXML
 	private Label message;
 	
 	private int port = 9001;
 	
-    @FXML 
+	@FXML 
     protected void handleSubmitButtonAction(ActionEvent event) 
     {
-    	String username = usernameField.getText();
-    	String password = passwordField.getText();
-    	
+		String username = usernameField.getText();
+		String email = emailField.getText();
+		String password = passwordField.getText();
+		String confPassword = confPasswordField.getText();
+		
+		if(username.compareTo("") == 0 || email.compareTo("") == 0 || password.compareTo("") == 0)
+		{
+			message.setText("Complete all fields!");
+			return;
+		}
+		
+		if(password.compareTo(confPassword) != 0)
+		{
+			message.setText("Password and Confirmation password do not match!");
+			return;
+		}
+		
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("username", username);
+		map.put("email", email);
 		map.put("password", password);
 		if (sendToServer(map).compareTo("Success")==0)
 		{
@@ -50,20 +66,14 @@ public class UserController
 		}
 		else
 		{
-			message.setText("Incorrect username or password!");
+			message.setText("Registration failed!");
 		}
     }
-    
-    @FXML 
-    protected void handleRegisterButtonAction(ActionEvent event) 
-    {
-		redirect(event, "../fxml/NewUser.fxml");
-    }
-    
-    public String sendToServer(Map<String, String> map) 
+	
+	public String sendToServer(Map<String, String> map) 
     {
 		System.out.println("Sending command to server");
-		SocketClientCallable commandWithSocket = new SocketClientCallable("localhost", port, "login", map);
+		SocketClientCallable commandWithSocket = new SocketClientCallable("localhost", port, "register", map);
 		System.out.println(receiveFromServer(commandWithSocket));
 		return receiveFromServer(commandWithSocket);
 
