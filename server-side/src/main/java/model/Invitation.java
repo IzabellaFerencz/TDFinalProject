@@ -16,15 +16,13 @@ public class Invitation {
 	@Column(name = "idInvitation")
 	private int idInvitation;
 
-	@Column(name = "idEvent")
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "idEvent")
-	private int idEvent;
+	private Event idEvent;
 
-	@Column(name = "idParticipant")
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "iduser")
-	private int idParticipant;
+	@ManyToOne
+	@JoinColumn(name = "idParticipant")
+	private User idParticipant;
 
 	@Column(name = "isAccepted")
 	private boolean isAccepted;
@@ -45,22 +43,22 @@ public class Invitation {
 		this.idInvitation = idInvitation;
 	}
 
-	public int getIdEvent()
+	public Event getIdEvent()
 	{
 		return idEvent;
 	}
 
-	public void setIdEvent(int idEvent)
+	public void setIdEvent(Event idEvent)
 	{
 		this.idEvent = idEvent;
 	}
 
-	public int getIdParticipant()
+	public User getIdParticipant()
 	{
 		return idParticipant;
 	}
 
-	public void setIdParticipant(int idParticipant)
+	public void setIdParticipant(User idParticipant)
 	{
 		this.idParticipant = idParticipant;
 	}

@@ -31,11 +31,10 @@ public class Event {
 
 	@Column(name = "nrofinvites")
 	private int nrOfInvites;
-
-	@Column(name = "idOrganizer")
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "iduser")
-	private int idOrganizer;
+	
+	@ManyToOne
+	@JoinColumn(name="idOrganizer")
+	private User user;
 
 	public int getIdEvent()
 	{
@@ -97,20 +96,20 @@ public class Event {
 		this.nrOfInvites = nrOfInvites;
 	}
 
-	public int getIdOrganizer()
-	{
-		return idOrganizer;
-	}
-
-	public void setIdOrganizer(int idOrganizer)
-	{
-		this.idOrganizer = idOrganizer;
-	}
-
 	@Override
 	public String toString()
 	{
 		return "Event [idEvent=" + idEvent + ", name=" + name + ", location=" + location + ", datetime=" + datetime
-				+ ", nrOfSeats=" + nrOfSeats + ", nrOfInvites=" + nrOfInvites + ", idOrganizer=" + idOrganizer + "]";
+				+ ", nrOfSeats=" + nrOfSeats + ", nrOfInvites=" + nrOfInvites + ", Organizer=" + user + "]";
+	}
+
+	public User getUser()
+	{
+		return user;
+	}
+
+	public void setUser(User user)
+	{
+		this.user = user;
 	}
 }

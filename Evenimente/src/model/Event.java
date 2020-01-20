@@ -15,7 +15,7 @@ public class Event
 
 	private int nrOfInvites;
 
-	private int idOrganizer;
+	private User idOrganizer;
 
 	public int getIdEvent()
 	{
@@ -77,13 +77,15 @@ public class Event
 		this.nrOfInvites = nrOfInvites;
 	}
 
-	public int getIdOrganizer()
+	public User getIdOrganizer()
 	{
 		return idOrganizer;
 	}
 
-	public void setIdOrganizer(int idOrganizer)
+	public void setIdOrganizer(User idOrganizer)
 	{
 		this.idOrganizer = idOrganizer;
 	}
+
+
 }

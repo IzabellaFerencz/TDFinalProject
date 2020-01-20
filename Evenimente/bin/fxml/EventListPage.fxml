@@ -10,19 +10,24 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane prefHeight="339.0" prefWidth="477.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.EventsController">
+<AnchorPane prefHeight="510.0" prefWidth="717.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.EventsController">
    <children>
-      <Pane layoutX="-9.0" prefHeight="194.0" prefWidth="405.0">
+      <Pane layoutX="-4.0" layoutY="2.0" prefHeight="506.0" prefWidth="725.0">
          <children>
-            <Button layoutX="179.0" layoutY="64.0" mnemonicParsing="false" onAction="#getEvents" prefHeight="25.0" prefWidth="110.0" text="Get Events" />
-            <TableView id="events" fx:id="events" layoutX="46.0" layoutY="123.0" prefHeight="200.0" prefWidth="314.0">
+            <Button layoutX="25.0" layoutY="26.0" mnemonicParsing="false" onAction="#getEvents" prefHeight="25.0" prefWidth="110.0" text="Get Events" />
+            <TableView id="events" fx:id="events" layoutX="25.0" layoutY="123.0" prefHeight="331.0" prefWidth="671.0">
               <columns>
-                <TableColumn id="cel1" fx:id="cel1" prefWidth="75.0" text="Location" />
-                <TableColumn id="cel2" fx:id="cel2" prefWidth="75.0" text="Start Time" />
+                <TableColumn id="cel1" fx:id="idCell" prefWidth="41.0" text="Id" />
+                <TableColumn id="cel2" fx:id="nameCell" prefWidth="116.0" text="Name" />
+                  <TableColumn id="cel2" fx:id="dateCell" prefWidth="120.0" text="DateTime" />
+                  <TableColumn id="cel1" fx:id="locationCell" prefWidth="108.0" text="Location" />
+                  <TableColumn id="cel1" fx:id="seatsCell" prefWidth="93.0" text="Nr of seats" />
+                  <TableColumn id="cel1" fx:id="orgCell" prefWidth="109.0" text="Organizer" />
+                  <TableColumn id="cel1" fx:id="availableCell" prefWidth="83.0" text="Available" />
               </columns>
             </TableView>
+            <Label fx:id="username" layoutX="570.0" layoutY="20.0" text="Hello, " />
          </children>
       </Pane>
-      <Label layoutX="396.0" layoutY="14.0" text="Hello, " fx:id="username"/>
    </children>
 </AnchorPane>

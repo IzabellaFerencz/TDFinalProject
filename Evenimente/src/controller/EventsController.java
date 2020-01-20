@@ -44,6 +44,18 @@ public class EventsController implements Initializable
 	private TableView events;
 	@FXML
 	private Label username;
+	@FXML
+	private TableColumn idCell;
+	@FXML
+	private TableColumn nameCell;
+	@FXML
+	private TableColumn locationCell;
+	@FXML
+	private TableColumn dateCell;
+	@FXML
+	private TableColumn seatsCell;
+	@FXML
+	private TableColumn orgCell;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) 
@@ -82,6 +94,14 @@ public class EventsController implements Initializable
 			}
 
 			System.out.println("Evenimente in Client: " + list.toString());
+			
+			this.idCell.setCellFactory(new PropertyValueFactory<Event, String>("idEvent"));
+			this.nameCell.setCellFactory(new PropertyValueFactory<Event, String>("name"));
+			this.dateCell.setCellFactory(new PropertyValueFactory<Event, String>("datetime"));
+			this.locationCell.setCellFactory(new PropertyValueFactory<Event, String>("location"));
+			this.seatsCell.setCellFactory(new PropertyValueFactory<Event, String>("nrOfSeats"));
+			this.events.setItems(list);
+			
 			//this.cel1.setCellValueFactory(new PropertyValueFactory<Event, String>("location"));
 			//this.cel2.setCellValueFactory(new PropertyValueFactory<Event, Date>("stratTime"));
 			//this.evenimente.setItems(list);

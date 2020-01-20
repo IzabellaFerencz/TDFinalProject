@@ -26,7 +26,7 @@ public class EventsService
 		List<Event> list = new ArrayList<Event>();
 		list=eventDao.findAll();
 	
-		if (list.size() > 0)
+		if (list != null)
 		{
 			results = gson.toJson(list);
 			System.out.println("EVENTS:");
