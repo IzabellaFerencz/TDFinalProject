@@ -6,6 +6,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import com.google.gson.Gson;
+
 import application.SocketClientCallable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,6 +20,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.User;
 
 public class RegisterController
 {
@@ -60,13 +63,18 @@ public class RegisterController
 		map.put("username", username);
 		map.put("email", email);
 		map.put("password", password);
-		if (sendToServer(map).compareTo("Success")==0)
+		
+		Gson gson = new Gson();
+
+		String serverResponse = sendToServer(map);
+		if (serverResponse.compareTo("Fail")==0)
 		{
-			redirect(event, "../fxml/EventListPage.fxml");
+			message.setText("Registration failed! Username or email already in use!");
 		}
 		else
 		{
-			message.setText("Registration failed!");
+			User.setUser(gson.fromJson(serverResponse, User.class));
+			redirect(event, "../fxml/EventListPage.fxml");
 		}
     }
 	
@@ -74,8 +82,9 @@ public class RegisterController
     {
 		System.out.println("Sending command to server");
 		SocketClientCallable commandWithSocket = new SocketClientCallable("localhost", port, "register", map);
-		System.out.println(receiveFromServer(commandWithSocket));
-		return receiveFromServer(commandWithSocket);
+		String response = receiveFromServer(commandWithSocket);
+		System.out.println(response);
+		return response;
 
 	}
 
@@ -102,7 +111,7 @@ public class RegisterController
 		{
 			Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			Parent root = FXMLLoader.load(getClass().getResource(view));
-			Scene scene = new Scene(root, 400, 400);
+			Scene scene = new Scene(root, 600, 600);
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		}

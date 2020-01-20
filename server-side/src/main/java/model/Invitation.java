@@ -16,13 +16,14 @@ public class Invitation {
 	@Column(name = "idInvitation")
 	private int idInvitation;
 
+	@Column(name = "idEvent")
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "idEvent")
 	private int idEvent;
 
 	@Column(name = "idParticipant")
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "userId")
+	@JoinColumn(name = "iduser")
 	private int idParticipant;
 
 	@Column(name = "isAccepted")

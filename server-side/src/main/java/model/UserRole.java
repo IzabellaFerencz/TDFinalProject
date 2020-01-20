@@ -21,7 +21,7 @@ public class UserRole
 	@Id
     @Column(name = "userId")
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "userId")
+	@JoinColumn(name = "iduser")
 	private int userId;
 
 	public int getRoleId()

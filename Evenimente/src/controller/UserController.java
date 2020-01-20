@@ -6,6 +6,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import com.google.gson.Gson;
+
 import application.SocketClientCallable;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -19,7 +21,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
+import model.User;
 import application.SocketClientCallable;
 
 public class UserController 
@@ -44,13 +46,16 @@ public class UserController
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("username", username);
 		map.put("password", password);
-		if (sendToServer(map).compareTo("Success")==0)
+		Gson gson = new Gson();
+		String serverResponse = sendToServer(map);
+		if (serverResponse.compareTo("Fail")==0)
 		{
-			redirect(event, "../fxml/EventListPage.fxml");
+			message.setText("Incorrect username or password!");		
 		}
 		else
 		{
-			message.setText("Incorrect username or password!");
+			User.setUser(gson.fromJson(serverResponse, User.class));
+			redirect(event, "../fxml/EventListPage.fxml");
 		}
     }
     
@@ -64,8 +69,9 @@ public class UserController
     {
 		System.out.println("Sending command to server");
 		SocketClientCallable commandWithSocket = new SocketClientCallable("localhost", port, "login", map);
-		System.out.println(receiveFromServer(commandWithSocket));
-		return receiveFromServer(commandWithSocket);
+		String response = receiveFromServer(commandWithSocket);
+		System.out.println(response);
+		return response;
 
 	}
 
@@ -92,7 +98,7 @@ public class UserController
 		{
 			Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			Parent root = FXMLLoader.load(getClass().getResource(view));
-			Scene scene = new Scene(root, 400, 400);
+			Scene scene = new Scene(root, 600, 600);
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		}

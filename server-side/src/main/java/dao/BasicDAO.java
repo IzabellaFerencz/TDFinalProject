@@ -26,7 +26,7 @@ public abstract class BasicDAO<T>
 		} 
 		catch (RuntimeException e) 
 		{
-			em.getTransaction().rollback();
+			//em.getTransaction().rollback();
 			return false;
 		} 
 		finally 

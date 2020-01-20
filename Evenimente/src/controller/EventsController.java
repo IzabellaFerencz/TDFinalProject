@@ -21,7 +21,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import model.Event;
+import model.User;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -32,25 +34,44 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
+import java.util.Observable;
+import java.util.ResourceBundle;
+import java.net.URL;
 
-public class EventsController
+public class EventsController implements Initializable
 {
 	@FXML
 	private TableView events;
+	@FXML
+	private Label username;
+	
+	@Override
+	public void initialize(URL location, ResourceBundle resources) 
+	{
+		  if(User.getUser().getUsername().isEmpty()==true)
+		  {     
+			  username.setText("Hello, Guest!");
+		  }
+		  else
+		  {
+			  username.setText("Hello, " + User.getUser().getUsername() +"!");		
+		  }
+	}
 	
 	@FXML
 	public void getEvents(ActionEvent event) throws ParseException 
 	{
 		Map<String, String> map = new HashMap<String, String>();
 		Gson gson = new Gson();
-		if (sendToServer(map, "getEvents").compareTo("Success") != 0) 
+		String serverResponse = sendToServer(map, "getEvents");
+		if (serverResponse.compareTo("Fail") == 0) 
 		{
 			System.out.println("Failed to get events");
 		} 
 		else 
 		{
 			Type eventListType = new TypeToken<ArrayList<Event>>() {}.getType();
-			ArrayList<Event> listw = gson.fromJson(sendToServer(map, "getEvents"), eventListType);
+			ArrayList<Event> listw = gson.fromJson(serverResponse, eventListType);
 			ObservableList<Event> list = FXCollections.observableList(listw);
 			
 			for (int i = 0; i < listw.size(); i++)
@@ -73,8 +94,9 @@ public class EventsController
 	{
 		System.out.println("Sending command to server");
 		SocketClientCallable commandWithSocket = new SocketClientCallable("localhost", 9001, action, map);
-		System.out.println(receiveFromServer(commandWithSocket));
-		return receiveFromServer(commandWithSocket);
+		String response = receiveFromServer(commandWithSocket);
+		System.out.println(response);
+		return response;
 
 	}
 

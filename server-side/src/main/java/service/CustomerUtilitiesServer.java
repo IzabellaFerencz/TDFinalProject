@@ -20,6 +20,8 @@ import model.User;
 public class CustomerUtilitiesServer implements Runnable
 {
 	private ServerSocket ss;
+	private UserService userService;
+	private EventsService eventService;
 
 	public CustomerUtilitiesServer(int port) throws IOException 
 	{
@@ -30,7 +32,10 @@ public class CustomerUtilitiesServer implements Runnable
 	public void accept() throws IOException 
 	{
 		String string = "";
+	    this.userService=new UserService();
+	    this.eventService = new EventsService();
 		System.out.println("Accepting connections on port " + ss.getLocalPort());
+		
 		while (!Thread.interrupted()) 
 		{
 			try (Socket socket = ss.accept()) 
@@ -44,9 +49,9 @@ public class CustomerUtilitiesServer implements Runnable
 						new InputStreamReader(socket.getInputStream(), "UTF-8"));
 
 				String inputCommand = bufferedInputReader.readLine();
-				String data_server = bufferedInputReader.readLine();
+				String receivedData = bufferedInputReader.readLine();
 				System.out.println("Command received:  " + inputCommand);
-				System.out.println("Data received:  " + data_server);
+				System.out.println("Data received:  " + receivedData);
 
 				boolean ok = false;
 
@@ -57,52 +62,19 @@ public class CustomerUtilitiesServer implements Runnable
 				switch (inputCommand) 
 				{
 					case "register":
-						user = gson.fromJson(data_server, User.class);
-						dto = new UserDAO(User.class);
-						boolean result = dto.create(user);
-						if(result == true)
-						{
-							string = "Success";
-						}
-						else
-						{
-							string = "Fail";
-						}
+						string = userService.register(receivedData);
 						
 						ok = true;
 						break;
 
 					case "login":
-						user = gson.fromJson(data_server, User.class);
-						dto = new UserDAO(User.class);
-						User u = dto.findByUsernameAndPassword(user.getUsername(), user.getPassword());
-						if (u != null)
-						{
-							string = "Success";
-						}
-						else
-						{
-							string = "Fail";
-						}
+						string = userService.login(receivedData);
+						System.out.println("string login " +string);
 						ok = true;
 						break;
 
 					case "getEvents":
-						EventDAO dtot= new EventDAO(Event.class);
-						List<Event> list = new ArrayList<Event>();
-						list=dtot.findAll();
-					
-						if (list.size() > 0)
-						{
-							string = gson.toJson(list);
-							System.out.println("EVENTS:");
-							System.out.println(list.toString());
-						} 
-						else
-						{
-							string = "Fail";
-						}
-						
+						string = eventService.getAllEvents();						
 						ok = true;
 						break; 
 					default:

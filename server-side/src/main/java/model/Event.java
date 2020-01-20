@@ -34,7 +34,7 @@ public class Event {
 
 	@Column(name = "idOrganizer")
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "userId")
+	@JoinColumn(name = "iduser")
 	private int idOrganizer;
 
 	public int getIdEvent()

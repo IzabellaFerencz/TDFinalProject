@@ -20,7 +20,7 @@ public class EventParticipant {
 	@Id
 	@Column(name = "idParticipant")
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "userId")
+	@JoinColumn(name = "iduser")
 	private int idParticipant;
 	
 	@Id
