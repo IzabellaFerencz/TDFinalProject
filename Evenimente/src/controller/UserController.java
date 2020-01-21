@@ -55,14 +55,14 @@ public class UserController
 		else
 		{
 			User.setUser(gson.fromJson(serverResponse, User.class));
-			redirect(event, "../fxml/EventListPage.fxml");
+			redirect(event, "../fxml/EventListPage.fxml", 700, 600);
 		}
     }
     
     @FXML 
     protected void handleRegisterButtonAction(ActionEvent event) 
     {
-		redirect(event, "../fxml/NewUser.fxml");
+		redirect(event, "../fxml/NewUser.fxml", 500, 500);
     }
     
     public String sendToServer(Map<String, String> map) 
@@ -92,13 +92,13 @@ public class UserController
 		return null;
 	}
 
-	public void redirect(ActionEvent event, String view)
+	public void redirect(ActionEvent event, String view, double width, double height)
 	{
 		try 
 		{
 			Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			Parent root = FXMLLoader.load(getClass().getResource(view));
-			Scene scene = new Scene(root, 600, 600);
+			Scene scene = new Scene(root, width, height);
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		}

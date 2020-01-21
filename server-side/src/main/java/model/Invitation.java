@@ -20,18 +20,18 @@ public class Invitation {
 	@JoinColumn(name = "idEvent")
 	private Event idEvent;
 
-	@ManyToOne
-	@JoinColumn(name = "idParticipant")
-	private User idParticipant;
-
 	@Column(name = "isAccepted")
 	private boolean isAccepted;
-	
+
 	@Column(name = "helpFile")
-	private Object helpFile;
+	private String helpFile;
 	
 	@Column(name = "secretCode")
 	private String secretCode;
+	
+	@ManyToOne
+	@JoinColumn(name = "idParticipant")
+	private User idParticipant;
 
 	public int getIdInvitation()
 	{
@@ -73,12 +73,12 @@ public class Invitation {
 		this.isAccepted = isAccepted;
 	}
 
-	public Object getHelpFile()
+	public String getHelpFile()
 	{
 		return helpFile;
 	}
 
-	public void setHelpFile(Object helpFile)
+	public void setHelpFile(String helpFile)
 	{
 		this.helpFile = helpFile;
 	}

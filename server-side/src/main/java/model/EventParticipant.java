@@ -17,17 +17,53 @@ public class EventParticipant {
 	@Column(name = "idevent_participant")
 	private int idEventParticipant;
 	
-	@Id
-	@Column(name = "idParticipant")
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "iduser")
-	private int idParticipant;
+	@ManyToOne
+	@JoinColumn(name = "idParticipant")
+	private User idParticipant;
 	
-	@Id
-	@Column(name = "idEvent")
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "idEvent")
-	private int idEvent;
+	private Event idEvent;
+
+	public int getIdEventParticipant()
+	{
+		return idEventParticipant;
+	}
+
+	public void setIdEventParticipant(int idEventParticipant)
+	{
+		this.idEventParticipant = idEventParticipant;
+	}
+
+	public User getIdParticipant()
+	{
+		return idParticipant;
+	}
+
+	public void setIdParticipant(User idParticipant)
+	{
+		this.idParticipant = idParticipant;
+	}
+
+	public Event getIdEvent()
+	{
+		return idEvent;
+	}
+
+	public void setIdEvent(Event idEvent)
+	{
+		this.idEvent = idEvent;
+	}
+
+	public boolean isAvailable()
+	{
+		return isAvailable;
+	}
+
+	public void setAvailable(boolean isAvailable)
+	{
+		this.isAvailable = isAvailable;
+	}
 
 	@Column(name = "isAvailable")
 	private boolean isAvailable;
