@@ -21,6 +21,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import model.Event;
+import model.EventModel;
 import model.User;
 import model.UserRoles;
 import javafx.fxml.FXMLLoader;
@@ -42,21 +43,23 @@ import java.net.URL;
 public class EventsController extends BaseController implements Initializable
 {
 	@FXML
-	private TableView events;
+	private TableView<EventModel> events;
 	@FXML
 	private Label username;
 	@FXML
-	private TableColumn idCell;
+	private TableColumn<EventModel, Integer> idCell;
 	@FXML
-	private TableColumn nameCell;
+	private TableColumn<EventModel, String> nameCell;
 	@FXML
-	private TableColumn locationCell;
+	private TableColumn<EventModel, String> locationCell;
 	@FXML
-	private TableColumn dateCell;
+	private TableColumn<EventModel, String> dateCell;
 	@FXML
-	private TableColumn seatsCell;
+	private TableColumn<EventModel, Integer> seatsCell;
 	@FXML
-	private TableColumn orgCell;
+	private TableColumn<EventModel, String> orgCell;
+	
+	private ObservableList<EventModel> eventsModels;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) 
@@ -98,24 +101,19 @@ public class EventsController extends BaseController implements Initializable
 		{
 			Type eventListType = new TypeToken<ArrayList<Event>>() {}.getType();
 			ArrayList<Event> listw = gson.fromJson(serverResponse, eventListType);
-			ObservableList<Event> list = FXCollections.observableList(listw);
-			
-			for (int i = 0; i < listw.size(); i++)
+			ArrayList<EventModel> eventList = new ArrayList<>();
+			for (Event eventObj : listw)
 			{
-				SimpleDateFormat fmt = new SimpleDateFormat("yyy-MM-dd");
-
-				System.out.println(listw.get(i).toString());
+				eventList.add(new EventModel(eventObj.getIdEvent(),eventObj.getName(), eventObj.getLocation(), eventObj.getDatetime(), eventObj.getNrOfSeats(), eventObj.getNrOfInvites(), eventObj.getUser().getUsername()));
 			}
-
-			System.out.println("Evenimente in Client: " + list.toString());
-			
-			this.idCell.setCellFactory(new PropertyValueFactory<Event, String>("idEvent"));
-			this.nameCell.setCellFactory(new PropertyValueFactory<Event, String>("name"));
-			this.dateCell.setCellFactory(new PropertyValueFactory<Event, String>("datetime"));
-			this.locationCell.setCellFactory(new PropertyValueFactory<Event, String>("location"));
-			this.seatsCell.setCellFactory(new PropertyValueFactory<Event, String>("nrOfSeats"));
-			this.events.setItems(list);
-
+			this.eventsModels = FXCollections.observableList(eventList);
+			idCell.setCellValueFactory(new PropertyValueFactory<>("Id"));
+			nameCell.setCellValueFactory(new PropertyValueFactory<>("Name"));
+			locationCell.setCellValueFactory(new PropertyValueFactory<>("Location"));
+			dateCell.setCellValueFactory(new PropertyValueFactory<>("Datetime"));
+			seatsCell.setCellValueFactory(new PropertyValueFactory<>("NrOfSeats"));
+			orgCell.setCellValueFactory(new PropertyValueFactory<>("Organizer"));
+			events.setItems(this.eventsModels);
 		}
 
 	}	
