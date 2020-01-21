@@ -17,16 +17,17 @@
             <Button layoutX="25.0" layoutY="26.0" mnemonicParsing="false" onAction="#getEvents" prefHeight="25.0" prefWidth="110.0" text="Get Events" />
             <TableView id="events" fx:id="events" layoutX="25.0" layoutY="123.0" prefHeight="331.0" prefWidth="671.0">
               <columns>
-                <TableColumn id="cel1" fx:id="idCell" prefWidth="41.0" text="Id" />
-                <TableColumn id="cel2" fx:id="nameCell" prefWidth="116.0" text="Name" />
-                  <TableColumn id="cel2" fx:id="dateCell" prefWidth="120.0" text="DateTime" />
-                  <TableColumn id="cel1" fx:id="locationCell" prefWidth="108.0" text="Location" />
-                  <TableColumn id="cel1" fx:id="seatsCell" prefWidth="93.0" text="Nr of seats" />
-                  <TableColumn id="cel1" fx:id="orgCell" prefWidth="109.0" text="Organizer" />
-                  <TableColumn id="cel1" fx:id="availableCell" prefWidth="83.0" text="Available" />
+                <TableColumn id="idCell" fx:id="idCell" prefWidth="41.0" text="Id" />
+                <TableColumn id="nameCell" fx:id="nameCell" prefWidth="116.0" text="Name" />
+                  <TableColumn id="dateCell" fx:id="dateCell" prefWidth="120.0" text="DateTime" />
+                  <TableColumn id="locationCell" fx:id="locationCell" prefWidth="108.0" text="Location" />
+                  <TableColumn id="seatsCell" fx:id="seatsCell" prefWidth="93.0" text="Nr of seats" />
+                  <TableColumn id="orgCell" fx:id="orgCell" prefWidth="109.0" text="Organizer" />
+                  <TableColumn id="availableCell" fx:id="availableCell" prefWidth="83.0" text="Available" />
               </columns>
             </TableView>
             <Label fx:id="username" layoutX="570.0" layoutY="20.0" text="Hello, " />
+            <Button layoutX="570.0" layoutY="57.0" mnemonicParsing="false" text="Log Out" fx:id="logOutBtn" onAction="#handleLogOut" />
          </children>
       </Pane>
    </children>

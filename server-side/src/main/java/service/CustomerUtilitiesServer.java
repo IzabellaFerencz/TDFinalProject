@@ -22,6 +22,7 @@ public class CustomerUtilitiesServer implements Runnable
 	private ServerSocket ss;
 	private UserService userService;
 	private EventsService eventService;
+	private UserRolesService userRolesService;
 
 	public CustomerUtilitiesServer(int port) throws IOException 
 	{
@@ -34,6 +35,7 @@ public class CustomerUtilitiesServer implements Runnable
 		String string = "";
 	    this.userService=new UserService();
 	    this.eventService = new EventsService();
+	    this.userRolesService = new UserRolesService();
 		System.out.println("Accepting connections on port " + ss.getLocalPort());
 		
 		while (!Thread.interrupted()) 
@@ -77,6 +79,17 @@ public class CustomerUtilitiesServer implements Runnable
 						string = eventService.getAllEvents();						
 						ok = true;
 						break; 
+						
+					case "getRoles":
+						string = userRolesService.getRolesOfUser(receivedData);						
+						ok = true;
+						break; 
+						
+					case "newEvent":
+						string = eventService.newEvent(receivedData);						
+						ok = true;
+						break; 
+						
 					default:
 						break;
 				}

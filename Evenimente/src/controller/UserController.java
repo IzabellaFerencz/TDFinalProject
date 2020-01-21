@@ -1,12 +1,16 @@
 package controller;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import application.SocketClientCallable;
 import javafx.event.ActionEvent;
@@ -22,9 +26,10 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.User;
+import model.UserRoles;
 import application.SocketClientCallable;
 
-public class UserController 
+public class UserController extends BaseController
 {
 	@FXML
 	private Button btnLogIn;
@@ -35,7 +40,6 @@ public class UserController
 	@FXML
 	private Label message;
 	
-	private int port = 9001;
 	
     @FXML 
     protected void handleSubmitButtonAction(ActionEvent event) 
@@ -43,11 +47,17 @@ public class UserController
     	String username = usernameField.getText();
     	String password = passwordField.getText();
     	
+    	if(username.compareTo("") == 0 || password.compareTo("") == 0)
+		{
+			message.setText("Complete all fields!");
+			return;
+		}
+    	
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("username", username);
 		map.put("password", password);
 		Gson gson = new Gson();
-		String serverResponse = sendToServer(map);
+		String serverResponse = sendToServer("login", map);
 		if (serverResponse.compareTo("Fail")==0)
 		{
 			message.setText("Incorrect username or password!");		
@@ -55,7 +65,38 @@ public class UserController
 		else
 		{
 			User.setUser(gson.fromJson(serverResponse, User.class));
-			redirect(event, "../fxml/EventListPage.fxml", 700, 600);
+			
+			Map<String, String> roleMap = new HashMap<String, String>();
+			roleMap.put("iduser", String.valueOf(User.getUser().getIdUser()));
+			String roleResponse = sendToServer("getRoles", roleMap);
+			if (roleResponse.compareTo("Fail")==0)
+			{
+				message.setText("Error occured when getting role information!");		
+			}
+			else
+			{
+				boolean isOrganizer = false;
+				Type roleListType = new TypeToken<ArrayList<UserRoles>>() {}.getType();
+				ArrayList<UserRoles> listw = gson.fromJson(roleResponse, roleListType);
+				for (UserRoles userRole : listw)
+				{
+					if (userRole.getRole().getName().compareTo("Organizer") == 0)
+					{
+						isOrganizer = true;
+						break;
+					}
+				}
+				
+				if(isOrganizer)
+				{
+					redirect(event, "../fxml/OrganizerEventListPage.fxml", 700, 600);
+				}
+				else
+				{
+					redirect(event, "../fxml/EventListPage.fxml", 700, 600);
+				}
+			}
+			
 		}
     }
     
@@ -65,46 +106,5 @@ public class UserController
 		redirect(event, "../fxml/NewUser.fxml", 500, 500);
     }
     
-    public String sendToServer(Map<String, String> map) 
-    {
-		System.out.println("Sending command to server");
-		SocketClientCallable commandWithSocket = new SocketClientCallable("localhost", port, "login", map);
-		String response = receiveFromServer(commandWithSocket);
-		System.out.println(response);
-		return response;
-
-	}
-
-	public String receiveFromServer(SocketClientCallable commandWithSocket) 
-	{
-		String serverResponse;
-		ExecutorService es = Executors.newCachedThreadPool();
-		Future<String> response = es.submit(commandWithSocket);
-		try 
-		{
-			serverResponse = response.get();
-			return serverResponse;
-		} 
-		catch (Exception e) 
-		{
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	public void redirect(ActionEvent event, String view, double width, double height)
-	{
-		try 
-		{
-			Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-			Parent root = FXMLLoader.load(getClass().getResource(view));
-			Scene scene = new Scene(root, width, height);
-			primaryStage.setScene(scene);
-			primaryStage.show();
-		}
-		catch (Exception e) 
-		{
-			e.printStackTrace();
-		}
-	}
+    
 }

@@ -27,7 +27,8 @@
               </columns>
             </TableView>
             <Label fx:id="username" layoutX="570.0" layoutY="20.0" text="Hello, " />
-            <Button layoutX="570.0" layoutY="57.0" mnemonicParsing="false" text="Log Out" fx:id="logOutBtn" onAction="#handleLogOut" />
+            <Button fx:id="logOutBtn" layoutX="570.0" layoutY="57.0" mnemonicParsing="false" onAction="#handleLogOut" text="Log Out" />
+            <Button layoutX="25.0" layoutY="66.0" mnemonicParsing="false" text="New Event" onAction="#handleNewEvent" />
          </children>
       </Pane>
    </children>

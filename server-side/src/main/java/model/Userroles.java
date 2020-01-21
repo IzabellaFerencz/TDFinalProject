@@ -3,6 +3,8 @@ package model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
@@ -13,14 +15,28 @@ import javax.persistence.Table;
 @Table(name = "userroles")
 public class Userroles
 {
-	@ManyToMany
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int userRoleId;
+	
+	@ManyToOne
 	@JoinColumn(name = "roleId")
 	private Role role;
 	
-	@ManyToMany
+	@ManyToOne
 	@JoinColumn(name="userId")
 	private User user;
+	
+	public int getUserRoleId()
+	{
+		return userRoleId;
+	}
 
+	public void setUserRoleId(int userRoleId)
+	{
+		this.userRoleId = userRoleId;
+	}
+	
 	public Role getRole()
 	{
 		return role;

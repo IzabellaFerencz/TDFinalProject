@@ -22,6 +22,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import model.Event;
 import model.User;
+import model.UserRoles;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -38,7 +39,7 @@ import java.util.Observable;
 import java.util.ResourceBundle;
 import java.net.URL;
 
-public class EventsController implements Initializable
+public class EventsController extends BaseController implements Initializable
 {
 	@FXML
 	private TableView events;
@@ -70,12 +71,25 @@ public class EventsController implements Initializable
 		  }
 	}
 	
+	@FXML 
+    protected void handleLogOut(ActionEvent event) 
+    {
+		User.setUser(null);
+		redirect(event, "../fxml/LogInPage.fxml", 400, 400);
+    }
+	
+	@FXML 
+    protected void handleNewEvent(ActionEvent event) 
+    {
+		redirect(event, "../fxml/NewEvent.fxml", 400, 400);
+    }
+	
 	@FXML
 	public void getEvents(ActionEvent event) throws ParseException 
 	{
 		Map<String, String> map = new HashMap<String, String>();
 		Gson gson = new Gson();
-		String serverResponse = sendToServer(map, "getEvents");
+		String serverResponse = sendToServer("getEvents", map);
 		if (serverResponse.compareTo("Fail") == 0) 
 		{
 			System.out.println("Failed to get events");
@@ -101,41 +115,8 @@ public class EventsController implements Initializable
 			this.locationCell.setCellFactory(new PropertyValueFactory<Event, String>("location"));
 			this.seatsCell.setCellFactory(new PropertyValueFactory<Event, String>("nrOfSeats"));
 			this.events.setItems(list);
-			
-			//this.cel1.setCellValueFactory(new PropertyValueFactory<Event, String>("location"));
-			//this.cel2.setCellValueFactory(new PropertyValueFactory<Event, Date>("stratTime"));
-			//this.evenimente.setItems(list);
 
 		}
 
-	}
-	
-	public String sendToServer(Map<String, String> map, String action) 
-	{
-		System.out.println("Sending command to server");
-		SocketClientCallable commandWithSocket = new SocketClientCallable("localhost", 9001, action, map);
-		String response = receiveFromServer(commandWithSocket);
-		System.out.println(response);
-		return response;
-
-	}
-
-	public String receiveFromServer(SocketClientCallable commandWithSocket) 
-	{
-		String serverResponse;
-		ExecutorService es = Executors.newCachedThreadPool();
-		Future<String> response = es.submit(commandWithSocket);
-		try 
-		{
-			serverResponse = response.get();
-
-			return serverResponse;
-
-		} 
-		catch (Exception e) 
-		{
-			e.printStackTrace();
-		}
-		return null;
-	}
+	}	
 }

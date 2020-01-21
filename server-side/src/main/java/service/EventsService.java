@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 
 import dao.EventDAO;
 import model.Event;
+import model.User;
 
 public class EventsService
 {
@@ -38,5 +39,20 @@ public class EventsService
 		}
 		
 		return results;
+	}
+	
+	public String newEvent(String receivedData)
+	{
+		Event event = gson.fromJson(receivedData, Event.class);
+		boolean result = eventDao.create(event);
+	
+		if(result) 
+		{
+			return "Success";
+		}
+		else
+		{
+			return "Fail";
+		}
 	}
 }

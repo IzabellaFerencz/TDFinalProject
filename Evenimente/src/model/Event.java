@@ -2,7 +2,6 @@ package model;
 
 public class Event 
 {
-
 	private int idEvent;
 
 	private String name;
@@ -15,7 +14,7 @@ public class Event
 
 	private int nrOfInvites;
 
-	private User idOrganizer;
+	private User user;
 
 	public int getIdEvent()
 	{
@@ -77,14 +76,14 @@ public class Event
 		this.nrOfInvites = nrOfInvites;
 	}
 
-	public User getIdOrganizer()
+	public User getUser()
 	{
-		return idOrganizer;
+		return user;
 	}
 
-	public void setIdOrganizer(User idOrganizer)
+	public void setUser(User user)
 	{
-		this.idOrganizer = idOrganizer;
+		this.user = user;
 	}
 
 

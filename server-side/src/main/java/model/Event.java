@@ -11,7 +11,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "event")
-public class Event {
+public class Event
+{
 
 	@Id
 	@Column(name = "idEvent")
