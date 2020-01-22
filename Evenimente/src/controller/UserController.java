@@ -3,31 +3,19 @@ package controller;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import application.SocketClientCallable;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import model.User;
 import model.UserRoles;
-import application.SocketClientCallable;
 
 public class UserController extends BaseController
 {
@@ -89,11 +77,11 @@ public class UserController extends BaseController
 				
 				if(isOrganizer)
 				{
-					redirect(event, "../fxml/OrganizerEventListPage.fxml", 700, 600);
+					redirect(event, "../fxml/OrganizerEventListPage.fxml", 900, 600);
 				}
 				else
 				{
-					redirect(event, "../fxml/EventListPage.fxml", 700, 600);
+					redirect(event, "../fxml/EventListPage.fxml", 900, 600);
 				}
 			}
 			

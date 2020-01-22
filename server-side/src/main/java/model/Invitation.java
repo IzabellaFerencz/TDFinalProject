@@ -2,11 +2,9 @@ package model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -18,7 +16,7 @@ public class Invitation {
 
 	@ManyToOne
 	@JoinColumn(name = "idEvent")
-	private Event idEvent;
+	private Event event;
 
 	@Column(name = "isAccepted")
 	private boolean isAccepted;
@@ -31,7 +29,7 @@ public class Invitation {
 	
 	@ManyToOne
 	@JoinColumn(name = "idParticipant")
-	private User idParticipant;
+	private User participant;
 
 	public int getIdInvitation()
 	{
@@ -43,24 +41,24 @@ public class Invitation {
 		this.idInvitation = idInvitation;
 	}
 
-	public Event getIdEvent()
+	public Event getEvent()
 	{
-		return idEvent;
+		return event;
 	}
 
-	public void setIdEvent(Event idEvent)
+	public void setEvent(Event event)
 	{
-		this.idEvent = idEvent;
+		this.event = event;
 	}
 
-	public User getIdParticipant()
+	public User getParticipant()
 	{
-		return idParticipant;
+		return participant;
 	}
 
-	public void setIdParticipant(User idParticipant)
+	public void setParticipant(User participant)
 	{
-		this.idParticipant = idParticipant;
+		this.participant = participant;
 	}
 
 	public boolean isAccepted()

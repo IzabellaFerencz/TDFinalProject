@@ -12,8 +12,9 @@ public class EventModel
     private SimpleStringProperty location;
     private SimpleStringProperty datetime;
     private SimpleStringProperty organizer;
+    private SimpleStringProperty status;
     
-    public EventModel(int id, String name, String location, String date, int seats, int invites, String organizer)
+    public EventModel(int id, String name, String location, String date, int seats, int invites, String organizer, String status)
     {
     	this.id = new SimpleIntegerProperty(id);
     	this.name = new SimpleStringProperty(name);
@@ -22,64 +23,75 @@ public class EventModel
     	this.nrOfInvites = new SimpleIntegerProperty(invites);
     	this.nrOfSeats = new SimpleIntegerProperty(seats);
     	this.organizer = new SimpleStringProperty(organizer);
+    	this.status = new SimpleStringProperty(status);
     }
     
-	public SimpleIntegerProperty getId()
+	public String getStatus()
 	{
-		return id;
+		return status.get();
 	}
 
-	public void setId(SimpleIntegerProperty id)
+	public void setStatus(String status)
 	{
-		this.id = id;
+		this.status = new SimpleStringProperty(status);
 	}
 
-	public SimpleIntegerProperty getNrOfSeats()
+	public int getId()
 	{
-		return nrOfSeats;
+		return id.get();
 	}
-	public void setNrOfSeats(SimpleIntegerProperty nrOfSeats)
+
+	public void setId(int id)
 	{
-		this.nrOfSeats = nrOfSeats;
+		this.id = new SimpleIntegerProperty(id);
 	}
-	public SimpleIntegerProperty getNrOfInvites()
+
+	public int getNrOfSeats()
 	{
-		return nrOfInvites;
+		return nrOfSeats.get();
 	}
-	public void setNrOfInvites(SimpleIntegerProperty nrOfInvites)
+	public void setNrOfSeats(int nrOfSeats)
 	{
-		this.nrOfInvites = nrOfInvites;
+		this.nrOfSeats = new SimpleIntegerProperty(nrOfSeats);
 	}
-	public SimpleStringProperty getName()
+	public int getNrOfInvites()
 	{
-		return name;
+		return nrOfInvites.get();
 	}
-	public void setName(SimpleStringProperty name)
+	public void setNrOfInvites(int nrOfInvites)
 	{
-		this.name = name;
+		this.nrOfInvites = new SimpleIntegerProperty(nrOfInvites);
 	}
-	public SimpleStringProperty getLocation()
+	public String getName()
 	{
-		return location;
+		return name.get();
 	}
-	public void setLocation(SimpleStringProperty location)
+	public void setName(String name)
 	{
-		this.location = location;
+		this.name = new SimpleStringProperty(name);
 	}
-	public SimpleStringProperty getDatetime()
+	public String getLocation()
 	{
-		return datetime;
+		return location.get();
 	}
-	public void setDatetime(SimpleStringProperty datetime)
+	public void setLocation(String location)
 	{
-		this.datetime = datetime;
+		this.location = new SimpleStringProperty(location);
 	}
-	public SimpleStringProperty getOrganizer()
+	public String getDatetime()
 	{
-		return organizer;
+		return datetime.get();
 	}
-	public void setOrganizer(SimpleStringProperty organizer)
+	public void setDatetime(String datetime)
 	{
-		this.organizer = organizer;
+		this.datetime = new SimpleStringProperty(datetime);
+	}
+	public String getOrganizer()
+	{
+		return organizer.get();
+	}
+	public void setOrganizer(String organizer)
+	{
+		this.organizer = new SimpleStringProperty(organizer);
 	}
 }

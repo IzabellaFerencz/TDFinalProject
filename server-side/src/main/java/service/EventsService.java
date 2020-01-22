@@ -2,9 +2,7 @@ package service;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.google.gson.Gson;
-
 import dao.EventDAO;
 import model.Event;
 import model.User;
@@ -26,6 +24,27 @@ public class EventsService
 		String results = null;
 		List<Event> list = new ArrayList<Event>();
 		list=eventDao.findAll();
+	
+		if (list != null)
+		{
+			results = gson.toJson(list);
+			System.out.println("EVENTS:");
+			System.out.println(list.toString());
+		} 
+		else
+		{
+			results = "Fail";
+		}
+		
+		return results;
+	}
+	
+	public String getEventsByOrganizer(String receivedData)
+	{
+		User organizer = gson.fromJson(receivedData, User.class);
+		String results = null;
+		List<Event> list = new ArrayList<Event>();
+		list=eventDao.findByOrganizer(organizer);
 	
 		if (list != null)
 		{

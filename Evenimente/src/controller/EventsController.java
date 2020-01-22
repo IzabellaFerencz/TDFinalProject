@@ -1,42 +1,29 @@
 package controller;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
-
-import application.SocketClientCallable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableView;
 import model.Event;
 import model.EventModel;
 import model.User;
-import model.UserRoles;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.Region;
-import javafx.stage.Stage;
-import java.util.Observable;
+import javafx.util.Callback;
+
 import java.util.ResourceBundle;
 import java.net.URL;
 
@@ -58,8 +45,13 @@ public class EventsController extends BaseController implements Initializable
 	private TableColumn<EventModel, Integer> seatsCell;
 	@FXML
 	private TableColumn<EventModel, String> orgCell;
+	@FXML
+	private TableColumn<EventModel, String> statusCell;
 	
 	private ObservableList<EventModel> eventsModels;
+	
+	@FXML
+	private Label message;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) 
@@ -72,6 +64,8 @@ public class EventsController extends BaseController implements Initializable
 		  {
 			  username.setText("Hello, " + User.getUser().getUsername() +"!");		
 		  }
+		  loadEvents();
+		  addButtonToTable();
 	}
 	
 	@FXML 
@@ -81,14 +75,98 @@ public class EventsController extends BaseController implements Initializable
 		redirect(event, "../fxml/LogInPage.fxml", 400, 400);
     }
 	
-	@FXML 
-    protected void handleNewEvent(ActionEvent event) 
-    {
-		redirect(event, "../fxml/NewEvent.fxml", 400, 400);
-    }
-	
 	@FXML
 	public void getEvents(ActionEvent event) throws ParseException 
+	{
+		loadEvents();
+		//addButtonToTable();
+	}
+	
+	private void addButtonToTable() 
+	{
+        TableColumn<EventModel, Void> colBtn = new TableColumn("Available");
+
+        Callback<TableColumn<EventModel, Void>, TableCell<EventModel, Void>> cellFactory = new Callback<TableColumn<EventModel, Void>, TableCell<EventModel, Void>>() 
+        {
+        	@Override
+            public TableCell<EventModel, Void> call(final TableColumn<EventModel, Void> param)
+        	{ 
+        		
+                final TableCell<EventModel, Void> cell = new TableCell<EventModel, Void>() 
+                {                	
+                    private final Button btn = new Button("Set Available");
+                    {
+                        btn.setOnAction((ActionEvent event) -> 
+                        {
+                        	EventModel data = getTableView().getItems().get(getIndex());
+                            System.out.println("selectedData: " + data);
+                            Gson gson = new Gson();
+                            Event eventObj = new Event();
+                            eventObj.setIdEvent(data.getId());
+                            if(getAvailability(eventObj))
+                            {
+                            	message.setText("You are already set as available!");
+                            }
+                            else
+                            {
+                        		Map<String, Object> eventPartMap = new HashMap<String, Object>();
+                        		eventPartMap.put("participant", User.getUser());
+                        		eventPartMap.put("event", eventObj);
+                                String resp = sendToServer("newEventsParticipant", gson.toJson(eventPartMap));
+                                if(resp.compareTo("Fail")==0)
+                                {
+                                	message.setText("Failed to set as available!");
+                                }
+                                else
+                                {
+                                	loadEvents();
+                                }
+                            }
+                            
+                        });
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) 
+                    {
+                        super.updateItem(item, empty);
+                        
+                        if (empty) 
+                        {
+                            setGraphic(null);
+                        } 
+                        else 
+                        {
+                            setGraphic(btn);
+                        }
+                    }
+                };
+                return cell;
+            }
+        };
+
+        colBtn.setCellFactory(cellFactory);
+
+        events.getColumns().add(colBtn);
+
+    }
+	
+	private boolean getAvailability(Event event) 
+	{
+		Gson gson = new Gson();
+		Map<String, Object> statusMap = new HashMap<String, Object>();
+		statusMap.put("participant", User.getUser());
+		statusMap.put("event", event);
+		String statusResponse = sendToServer("getEventsParticipant", gson.toJson(statusMap));
+		if(statusResponse.compareTo("Fail") == 0)
+		{
+			return false;
+		}
+		
+		return true;
+	}
+	
+	private void loadEvents()
 	{
 		Map<String, String> map = new HashMap<String, String>();
 		Gson gson = new Gson();
@@ -104,7 +182,16 @@ public class EventsController extends BaseController implements Initializable
 			ArrayList<EventModel> eventList = new ArrayList<>();
 			for (Event eventObj : listw)
 			{
-				eventList.add(new EventModel(eventObj.getIdEvent(),eventObj.getName(), eventObj.getLocation(), eventObj.getDatetime(), eventObj.getNrOfSeats(), eventObj.getNrOfInvites(), eventObj.getUser().getUsername()));
+				String av;
+				if(getAvailability(eventObj))
+				{
+					av = "Available";
+				}
+				else
+				{
+					av="Not Available";
+				}
+				eventList.add(new EventModel(eventObj.getIdEvent(),eventObj.getName(), eventObj.getLocation(), eventObj.getDatetime(), eventObj.getNrOfSeats(), eventObj.getNrOfInvites(), eventObj.getUser().getUsername(), av));
 			}
 			this.eventsModels = FXCollections.observableList(eventList);
 			idCell.setCellValueFactory(new PropertyValueFactory<>("Id"));
@@ -113,8 +200,8 @@ public class EventsController extends BaseController implements Initializable
 			dateCell.setCellValueFactory(new PropertyValueFactory<>("Datetime"));
 			seatsCell.setCellValueFactory(new PropertyValueFactory<>("NrOfSeats"));
 			orgCell.setCellValueFactory(new PropertyValueFactory<>("Organizer"));
+			statusCell.setCellValueFactory(new PropertyValueFactory<>("Status"));
 			events.setItems(this.eventsModels);
 		}
-
-	}	
+	}
 }

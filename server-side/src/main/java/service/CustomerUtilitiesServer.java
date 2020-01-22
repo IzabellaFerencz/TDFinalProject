@@ -7,15 +7,6 @@ import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
-import java.util.ArrayList;
-import java.util.List;
-
-import com.google.gson.Gson;
-
-import dao.EventDAO;
-import dao.UserDAO;
-import model.Event;
-import model.User;
 
 public class CustomerUtilitiesServer implements Runnable
 {
@@ -23,6 +14,7 @@ public class CustomerUtilitiesServer implements Runnable
 	private UserService userService;
 	private EventsService eventService;
 	private UserRolesService userRolesService;
+	private EventParticipantService eventParticipantService;
 
 	public CustomerUtilitiesServer(int port) throws IOException 
 	{
@@ -36,6 +28,7 @@ public class CustomerUtilitiesServer implements Runnable
 	    this.userService=new UserService();
 	    this.eventService = new EventsService();
 	    this.userRolesService = new UserRolesService();
+	    this.eventParticipantService = new EventParticipantService();
 		System.out.println("Accepting connections on port " + ss.getLocalPort());
 		
 		while (!Thread.interrupted()) 
@@ -56,10 +49,6 @@ public class CustomerUtilitiesServer implements Runnable
 				System.out.println("Data received:  " + receivedData);
 
 				boolean ok = false;
-
-				Gson gson = new Gson();
-				User user;
-				UserDAO dto;
 
 				switch (inputCommand) 
 				{
@@ -89,6 +78,21 @@ public class CustomerUtilitiesServer implements Runnable
 						string = eventService.newEvent(receivedData);						
 						ok = true;
 						break; 
+						
+					case "getEventsByOrganizer":
+						string = eventService.getEventsByOrganizer(receivedData);						
+						ok = true;
+						break; 
+						
+					case "getEventsParticipant":
+						string = eventParticipantService.getEventParticipant(receivedData);						
+						ok = true;
+						break; 
+						
+					case "newEventsParticipant":
+						string = eventParticipantService.newEventParticipant(receivedData);						
+						ok = true;
+						break;
 						
 					default:
 						break;

@@ -9,6 +9,8 @@ import java.net.Socket;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
+import com.google.gson.Gson;
+
 public class SocketClientCallable implements Callable<String> 
 {
 
@@ -17,6 +19,7 @@ public class SocketClientCallable implements Callable<String>
 	private Socket socket;
 	private String command;
 	private Map<String, String> data;
+	private String jsonData;
 
 	public SocketClientCallable(String host, int port, String command, Map<String, String> map) 
 	{
@@ -24,6 +27,15 @@ public class SocketClientCallable implements Callable<String>
 		this.port = port;
 		this.command = command;
 		this.data = map;
+	}
+	
+	public SocketClientCallable(String host, int port, String command, String jsonData) 
+	{
+		this.host = host;
+		this.port = port;
+		this.command = command;
+		this.jsonData = jsonData;
+		this.data = null;
 	}
 
 	@Override
@@ -38,7 +50,15 @@ public class SocketClientCallable implements Callable<String>
 			BufferedReader bufferedInputReader = new BufferedReader(
 					new InputStreamReader(socket.getInputStream(), "UTF-8"));
 
-			bufferedOutputWriter.write(command + "\n" + data);
+			Gson gson = new Gson();
+			if(this.data == null)
+			{
+				bufferedOutputWriter.write(command + "\n" + jsonData);
+			}
+			else
+			{
+				bufferedOutputWriter.write(command + "\n" + gson.toJson(data));
+			}
 			bufferedOutputWriter.newLine();
 			bufferedOutputWriter.flush();
 

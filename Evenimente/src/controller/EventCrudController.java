@@ -12,7 +12,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import model.Event;
 import model.User;
 
 public class EventCrudController extends BaseController implements Initializable
@@ -29,6 +28,8 @@ public class EventCrudController extends BaseController implements Initializable
 	private TextField invitesField;
 	@FXML
 	private Label username;
+	@FXML
+	private Label message;
 	
 	@FXML 
     protected void handleNewEvent(ActionEvent event) 
@@ -40,18 +41,20 @@ public class EventCrudController extends BaseController implements Initializable
 		String seats = seatsField.getText();
 		String invites = invitesField.getText();
 
-		Map<String, String> map = new HashMap<String, String>();
+		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("name", name);
 		map.put("location", location);
 		map.put("datetime", date);
 		map.put("nrOfSeats", seats);
 		map.put("nrOfInvites", invites);
-		map.put("user", gson.toJson(User.getUser()));
+		map.put("user", User.getUser());
 		
-		String serverResponse = sendToServer("newEvent", map);
+		String json = gson.toJson(map);
+		
+		String serverResponse = sendToServer("newEvent", json);
 		if (serverResponse.compareTo("Fail")==0)
 		{
-				
+				message.setText("Failed to create event!");
 		}
 		else
 		{

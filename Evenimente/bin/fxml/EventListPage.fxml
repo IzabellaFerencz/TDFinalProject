@@ -12,10 +12,10 @@
 
 <AnchorPane prefHeight="510.0" prefWidth="717.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.EventsController">
    <children>
-      <Pane layoutX="-4.0" layoutY="2.0" prefHeight="506.0" prefWidth="725.0">
+      <Pane layoutX="-4.0" layoutY="2.0" prefHeight="506.0" prefWidth="926.0">
          <children>
-            <Button layoutX="25.0" layoutY="26.0" mnemonicParsing="false" onAction="#getEvents" prefHeight="25.0" prefWidth="110.0" text="Get Events" />
-            <TableView id="events" fx:id="events" layoutX="25.0" layoutY="123.0" prefHeight="331.0" prefWidth="671.0">
+            <Button layoutX="25.0" layoutY="26.0" mnemonicParsing="false" onAction="#getEvents" prefHeight="25.0" prefWidth="110.0" text="Refresh" />
+            <TableView id="events" fx:id="events" layoutX="25.0" layoutY="123.0" prefHeight="331.0" prefWidth="852.0">
               <columns>
                 <TableColumn id="idCell" fx:id="idCell" prefWidth="41.0" text="Id" />
                 <TableColumn id="nameCell" fx:id="nameCell" prefWidth="116.0" text="Name" />
@@ -23,11 +23,12 @@
                   <TableColumn id="locationCell" fx:id="locationCell" prefWidth="108.0" text="Location" />
                   <TableColumn id="seatsCell" fx:id="seatsCell" prefWidth="93.0" text="Nr of seats" />
                   <TableColumn id="orgCell" fx:id="orgCell" prefWidth="109.0" text="Organizer" />
-                  <TableColumn id="availableCell" fx:id="availableCell" prefWidth="83.0" text="Available" />
+                  <TableColumn id="statusCell" fx:id="statusCell" prefWidth="109.0" text="Status" />
               </columns>
             </TableView>
-            <Label fx:id="username" layoutX="570.0" layoutY="20.0" text="Hello, " />
-            <Button layoutX="570.0" layoutY="57.0" mnemonicParsing="false" text="Log Out" fx:id="logOutBtn" onAction="#handleLogOut" />
+            <Label fx:id="username" layoutX="793.0" layoutY="16.0" text="Hello, " />
+            <Button fx:id="logOutBtn" layoutX="793.0" layoutY="57.0" mnemonicParsing="false" onAction="#handleLogOut" text="Log Out" />
+            <Label layoutX="33.0" layoutY="464.0" text="" fx:id="message" />
          </children>
       </Pane>
    </children>

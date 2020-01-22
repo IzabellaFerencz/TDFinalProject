@@ -26,6 +26,16 @@ public class BaseController
 		return response;
 
 	}
+	
+	public String sendToServer(String command, String data) 
+    {
+		System.out.println("Sending command to server");
+		SocketClientCallable commandWithSocket = new SocketClientCallable("localhost", port, command, data);
+		String response = receiveFromServer(commandWithSocket);
+		System.out.println(response);
+		return response;
+
+	}
 
 	public String receiveFromServer(SocketClientCallable commandWithSocket) 
 	{
