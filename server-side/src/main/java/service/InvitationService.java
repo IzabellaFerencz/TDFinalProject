@@ -1,5 +1,7 @@
 package service;
 
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -11,6 +13,7 @@ import org.eclipse.persistence.jpa.jpql.parser.DateTime;
 
 import com.google.gson.Gson;
 
+import application.IUserNotification;
 import dao.InvitationDAO;
 import model.Event;
 import model.EventParticipant;
@@ -30,6 +33,23 @@ public class InvitationService
 		this.invitationDao = new InvitationDAO(Invitation.class);
 	}
 	
+	public void sendAlertNotification(Notification notification)
+	{
+		try 
+		{
+			int port = notification.getUser().getIdUser();
+			Registry reg = 	LocateRegistry.getRegistry(port);
+			IUserNotification stub = (IUserNotification) reg.lookup("Notifications");
+			stub.notifyUser(notification);
+			System.out.println("Alert notification sent ");
+		}
+		catch(Exception e)
+		{
+			System.err.println("Client exception "+ e.toString());
+			e.printStackTrace();
+		}
+	}
+	
 	public String sendInvitation(String receivedData)
 	{		
 		Invitation invitation = gson.fromJson(receivedData, Invitation.class);
@@ -44,6 +64,7 @@ public class InvitationService
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");  
 			notification.setDate(dateFormat.format(new Date(System.currentTimeMillis())));
 			notif.sendNotification(gson.toJson(notification));
+			sendAlertNotification(notification);
 			return "Success";
 		}
 		else

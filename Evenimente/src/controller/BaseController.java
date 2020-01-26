@@ -1,22 +1,45 @@
 package controller;
 
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import application.IUserNotification;
 import application.SocketClientCallable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
+import model.Notification;
+import model.User;
+import javafx.scene.control.ButtonBar;
 
-public class BaseController
+public class BaseController implements IUserNotification
 {
 	private int port = 9001;
+	
+	@Override
+	public void notifyUser(Notification notification) throws RemoteException
+	{
+		if(User.getUser().getIdUser() == notification.getUser().getIdUser())
+		{
+			 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+	         alert.setTitle("New Notification");
+	         alert.setContentText(notification.getMessage());
+	         ButtonType okButton = new ButtonType("OK", ButtonBar.ButtonData.YES);
+	         alert.getButtonTypes().setAll(okButton);
+	         alert.show();
+			System.out.println(notification.getMessage() + " for user "+notification.getUser().getUsername());
+		}
+
+	}
 	
 	public String sendToServer(String command, Map<String, String> map) 
     {

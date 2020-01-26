@@ -1,5 +1,9 @@
 package application;
 
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,22 +15,27 @@ public class ClientMain extends Application {
 	public static String serverResponse;
 
 	@Override
-	public void start(Stage primaryStage) {
-		try {
+	public void start(Stage primaryStage) 
+	{
+		try
+		{
 			Parent root = FXMLLoader.load(getClass().getResource("../fxml/LogInPage.fxml"));
 
 			Scene scene = new Scene(root, 400, 400);
 			primaryStage.setTitle("FXML Welcome");
 			primaryStage.setScene(scene);
 			primaryStage.show();
-		} catch (Exception e) {
+		} 
+		catch (Exception e) 
+		{
 			e.printStackTrace();
 		}
-
-
 	}
+	
+	
 
-	public static void main(String[] args) {
+	public static void main(String[] args) 
+	{
 		launch(args);
 	}
 }

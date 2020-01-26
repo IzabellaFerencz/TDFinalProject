@@ -1,6 +1,9 @@
 package controller;
 
 import java.lang.reflect.Type;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,6 +11,8 @@ import java.util.Map;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import application.IUserNotification;
+import application.UserNotification;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -74,7 +79,7 @@ public class UserController extends BaseController
 						break;
 					}
 				}
-				
+				setUpRmi();
 				if(isOrganizer)
 				{
 					redirect(event, "../fxml/OrganizerEventListPage.fxml", 1000, 600);
@@ -87,6 +92,28 @@ public class UserController extends BaseController
 			
 		}
     }
+    
+    private void setUpRmi()
+	{
+		try 
+		{
+			if(User.getUser()!=null)
+			{
+				int userPort = User.getUser().getIdUser();
+				UserNotification obj = new UserNotification();
+				IUserNotification stub = (IUserNotification) UnicastRemoteObject.exportObject(obj, 0);
+				Registry reg = LocateRegistry.createRegistry(userPort);
+				reg.bind("Notifications", stub);
+				System.out.println("RMI Server is runing");
+			}
+
+		}
+		catch(Exception e) 
+		{
+			System.err.println("Server exception: "+ e.toString());
+			e.printStackTrace();
+		}
+	}
     
     @FXML 
     protected void handleRegisterButtonAction(ActionEvent event) 

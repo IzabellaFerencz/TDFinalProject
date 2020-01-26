@@ -1,8 +1,14 @@
 package model;
 
+import java.io.Serializable;
 
-public class Notification
+public class Notification implements Serializable
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private int id;
 	private String message;
 	private String date;

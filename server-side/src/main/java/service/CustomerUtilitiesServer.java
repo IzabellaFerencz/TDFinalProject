@@ -8,6 +8,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 
+import model.Notification;
+
 public class CustomerUtilitiesServer implements Runnable
 {
 	private ServerSocket ss;
