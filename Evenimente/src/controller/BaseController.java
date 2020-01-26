@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -68,5 +69,20 @@ public class BaseController
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	public void openNewPage(ActionEvent event, String view, double width, double height)
+	{
+		Parent root;
+        try {
+            root = FXMLLoader.load(getClass().getResource(view));
+            Stage stage = new Stage();
+            stage.setTitle("");
+            stage.setScene(new Scene(root, width, height));
+            stage.show();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
 	}
 }

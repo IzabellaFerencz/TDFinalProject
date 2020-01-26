@@ -10,21 +10,23 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane prefHeight="510.0" prefWidth="717.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.NotificationsController">
+<AnchorPane prefHeight="510.0" prefWidth="717.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UserInvitesController">
    <children>
       <Pane layoutX="-4.0" layoutY="2.0" prefHeight="506.0" prefWidth="1034.0">
          <children>
-            <TableView id="invites" fx:id="notifications" layoutX="25.0" layoutY="123.0" prefHeight="331.0" prefWidth="601.0">
+            <TableView id="invites" fx:id="invites" layoutX="25.0" layoutY="123.0" prefHeight="331.0" prefWidth="778.0">
               <columns>
                 <TableColumn id="idCell" fx:id="idCell" prefWidth="41.0" text="Id" />
-                <TableColumn id="messageCell" fx:id="messageCell" prefWidth="102.0" text="Message" />
-                  <TableColumn id="dateCell" fx:id="dateCell" prefWidth="150.0" text="Date" />
+                <TableColumn id="eventCell" fx:id="eventCell" prefWidth="102.0" text="Event" />
+                  <TableColumn id="fileCell" fx:id="fileCell" prefWidth="150.0" text="File" />
+                  <TableColumn id="codeCell" fx:id="secretCodeCell" prefWidth="145.0" text="Secret Code" />
+                  <TableColumn id="statusCell" fx:id="statusCell" prefWidth="96.0" text="Status" />
               </columns>
             </TableView>
             <Label fx:id="username" layoutX="716.0" layoutY="14.0" text="Hello, " />
             <Button fx:id="logOutBtn" layoutX="721.0" layoutY="56.0" mnemonicParsing="false" onAction="#handleLogOut" text="Log Out" />
             <Label fx:id="message" layoutX="33.0" layoutY="464.0" text="" />
-            <Button layoutX="33.0" layoutY="35.0" mnemonicParsing="false" onAction="#handleBack" text="Back" />
+            <Button layoutX="33.0" layoutY="35.0" onAction="#handleBack" mnemonicParsing="false" text="Back" />
          </children>
       </Pane>
    </children>

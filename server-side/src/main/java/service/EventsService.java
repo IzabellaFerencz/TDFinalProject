@@ -74,4 +74,34 @@ public class EventsService
 			return "Fail";
 		}
 	}
+	
+	public String editEvent(String receivedData)
+	{
+		Event event = gson.fromJson(receivedData, Event.class);
+		boolean result = eventDao.EditEvent(event);
+	
+		if(result) 
+		{
+			return "Success";
+		}
+		else
+		{
+			return "Fail";
+		}
+	}
+	
+	public String deleteEvent(String receivedData)
+	{
+		Event event = gson.fromJson(receivedData, Event.class);
+		boolean result = eventDao.remove(event, event.getIdEvent());
+	
+		if(result) 
+		{
+			return "Success";
+		}
+		else
+		{
+			return "Fail";
+		}
+	}
 }

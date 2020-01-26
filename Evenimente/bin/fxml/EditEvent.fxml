@@ -30,7 +30,7 @@
            
        <HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="6">
               <children>
-              <Button onAction="#handleNewEvent" text="Create" />
+              <Button onAction="#handleEditEvent" text="Update" />
               </children>
    		</HBox>
       <Label fx:id="username" contentDisplay="RIGHT" prefHeight="21.0" prefWidth="169.0" text="Hello, " textAlignment="RIGHT" GridPane.columnIndex="1" />

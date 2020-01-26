@@ -15,6 +15,8 @@ public class CustomerUtilitiesServer implements Runnable
 	private EventsService eventService;
 	private UserRolesService userRolesService;
 	private EventParticipantService eventParticipantService;
+	private InvitationService invitationService;
+	private NotificationsService notificationsService;
 
 	public CustomerUtilitiesServer(int port) throws IOException 
 	{
@@ -29,6 +31,8 @@ public class CustomerUtilitiesServer implements Runnable
 	    this.eventService = new EventsService();
 	    this.userRolesService = new UserRolesService();
 	    this.eventParticipantService = new EventParticipantService();
+	    this.invitationService = new InvitationService();
+	    this.notificationsService = new NotificationsService();
 		System.out.println("Accepting connections on port " + ss.getLocalPort());
 		
 		while (!Thread.interrupted()) 
@@ -54,13 +58,17 @@ public class CustomerUtilitiesServer implements Runnable
 				{
 					case "register":
 						string = userService.register(receivedData);
-						
 						ok = true;
 						break;
 
 					case "login":
 						string = userService.login(receivedData);
 						System.out.println("string login " +string);
+						ok = true;
+						break;
+						
+					case "getUserByUsername":
+						string = userService.findUserByUsername(receivedData);
 						ok = true;
 						break;
 
@@ -91,6 +99,56 @@ public class CustomerUtilitiesServer implements Runnable
 						
 					case "newEventsParticipant":
 						string = eventParticipantService.newEventParticipant(receivedData);						
+						ok = true;
+						break;
+						
+					case "getParticipants":
+						string = eventParticipantService.getParticipantsForEvent(receivedData);						
+						ok = true;
+						break;
+						
+					case "editEvent":
+						string = eventService.editEvent(receivedData);						
+						ok = true;
+						break;
+						
+					case "deleteEvent":
+						string = eventService.deleteEvent(receivedData);						
+						ok = true;
+						break;
+						
+					case "removeEventsParticipant":
+						string = eventParticipantService.deleteEventParticipant(receivedData);						
+						ok = true;
+						break;
+						
+					case "sendInvitation":
+						string = invitationService.sendInvitation(receivedData);						
+						ok = true;
+						break;
+						
+					case "getInvite":
+						string = invitationService.getInvitation(receivedData);						
+						ok = true;
+						break;
+						
+					case "getParticipantStatus":
+						string = invitationService.getParticipantStatus(receivedData);						
+						ok = true;
+						break;
+						
+					case "getInvitesOfUser":
+						string = invitationService.getInvitesOfUser(receivedData);						
+						ok = true;
+						break;
+						
+					case "getUsersNotifications":
+						string = notificationsService.getNotificationsOfUser(receivedData);						
+						ok = true;
+						break;
+						
+					case "reserveInvitation":
+						string = invitationService.reserveInvitation(receivedData);						
 						ok = true;
 						break;
 						

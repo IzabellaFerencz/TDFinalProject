@@ -7,6 +7,7 @@
 		<class>model.Invitation</class>
 		<class>model.EventParticipant</class>
 		<class>model.Userroles</class>
+		<class>model.Notification</class>
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3307/td_db"/>
 			<property name="javax.persistence.jdbc.user" value="root"/>

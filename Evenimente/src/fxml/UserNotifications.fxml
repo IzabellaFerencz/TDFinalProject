@@ -3,25 +3,29 @@
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 
-
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+<AnchorPane prefHeight="510.0" prefWidth="717.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.NotificationsController">
    <children>
-      <ScrollPane layoutX="-542.0" layoutY="-564.0" prefHeight="503.0" prefWidth="518.0">
-         <content>
-            <Pane prefHeight="499.0" prefWidth="516.0">
-               <children>
-                  <TableView layoutX="70.0" layoutY="111.0" prefHeight="277.0" prefWidth="377.0">
-                    <columns>
-                      <TableColumn prefWidth="75.0" text="Id" />
-                      <TableColumn prefWidth="134.0" text="Event Name" />
-                        <TableColumn prefWidth="166.0" text="Reply Status" />
-                    </columns>
-                  </TableView>
-               </children>
-            </Pane>
-         </content>
-      </ScrollPane>
+      <Pane layoutX="-4.0" layoutY="2.0" prefHeight="506.0" prefWidth="1034.0">
+         <children>
+            <TableView id="invites" fx:id="notifications" layoutX="25.0" layoutY="123.0" prefHeight="331.0" prefWidth="601.0">
+              <columns>
+                <TableColumn id="idCell" fx:id="idCell" prefWidth="41.0" text="Id" />
+                <TableColumn id="messageCell" fx:id="messageCell" prefWidth="102.0" text="Message" />
+                  <TableColumn id="dateCell" fx:id="dateCell" prefWidth="150.0" text="Date" />
+              </columns>
+            </TableView>
+            <Label fx:id="username" layoutX="716.0" layoutY="14.0" text="Hello, " />
+            <Button fx:id="logOutBtn" layoutX="721.0" layoutY="56.0" mnemonicParsing="false" onAction="#handleLogOut" text="Log Out" />
+            <Label fx:id="message" layoutX="33.0" layoutY="464.0" text="" />
+            <Button layoutX="33.0" layoutY="35.0" mnemonicParsing="false" onAction="#handleBack" text="Back" />
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

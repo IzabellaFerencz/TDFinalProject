@@ -91,11 +91,11 @@ public class RegisterController extends BaseController
 				
 				if(isOrganizer)
 				{
-					redirect(event, "../fxml/OrganizerEventListPage.fxml", 900, 600);
+					redirect(event, "../fxml/OrganizerEventListPage.fxml", 1000, 600);
 				}
 				else
 				{
-					redirect(event, "../fxml/EventListPage.fxml", 900, 600);
+					redirect(event, "../fxml/EventListPage.fxml", 1000, 600);
 				}
 			}
 			

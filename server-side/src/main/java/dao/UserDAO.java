@@ -37,4 +37,26 @@ public class UserDAO extends BasicDAO<User>
 		} 
 
 	}
+
+	public User findByUsername(String username)
+	{
+		EntityManager em = EntityManagerUtil.getEntityManagerFactory().createEntityManager();
+		try 
+		{
+			CriteriaBuilder cb = em.getCriteriaBuilder();
+			CriteriaQuery cq = cb.createQuery();
+			Root<User> root = cq.from(User.class);
+			cq.select(root);
+			cq.where(cb.equal(root.get("username"), username));
+			User returnValues = (User) em.createQuery(cq).getSingleResult();
+			em.close();
+			return returnValues;
+		} 
+		catch (RuntimeException e) 
+		{
+			//em.getTransaction().rollback();
+			em.close();
+			return null;
+		} 
+	}
 }

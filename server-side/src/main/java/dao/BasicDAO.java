@@ -55,7 +55,7 @@ public abstract class BasicDAO<T>
 		}
 	}
 
-	public void remove(T entity, int entityId) 
+	public boolean remove(T entity, int entityId) 
 	{
 		EntityManager em = EntityManagerUtil.getEntityManagerFactory().createEntityManager();
 		try
@@ -63,14 +63,13 @@ public abstract class BasicDAO<T>
 			em.getTransaction().begin();
 			em.remove((T) em.find(this.entityClass, entityId));
 			em.getTransaction().commit();
+			em.close();
+			return true;
 		} 
 		catch (RuntimeException e) 
 		{
-			em.getTransaction().rollback();
-		}
-		finally 
-		{
 			em.close();
+			return false;
 		}
 	}
 

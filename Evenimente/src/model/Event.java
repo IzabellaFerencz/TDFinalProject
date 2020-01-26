@@ -12,9 +12,19 @@ public class Event
 
 	private int nrOfSeats;
 
-	private int nrOfInvites;
-
 	private User user;
+	
+	private static Event event;
+
+	public static Event getEvent()
+	{
+		return event;
+	}
+
+	public static void setEvent(Event event)
+	{
+		Event.event = event;
+	}
 
 	public int getIdEvent()
 	{
@@ -64,16 +74,6 @@ public class Event
 	public void setNrOfSeats(int nrOfSeats)
 	{
 		this.nrOfSeats = nrOfSeats;
-	}
-
-	public int getNrOfInvites()
-	{
-		return nrOfInvites;
-	}
-
-	public void setNrOfInvites(int nrOfInvites)
-	{
-		this.nrOfInvites = nrOfInvites;
 	}
 
 	public User getUser()

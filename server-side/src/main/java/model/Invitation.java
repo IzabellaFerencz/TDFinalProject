@@ -9,14 +9,11 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "invitation")
-public class Invitation {
+public class Invitation 
+{
 	@Id
 	@Column(name = "idInvitation")
 	private int idInvitation;
-
-	@ManyToOne
-	@JoinColumn(name = "idEvent")
-	private Event event;
 
 	@Column(name = "isAccepted")
 	private boolean isAccepted;
@@ -29,7 +26,7 @@ public class Invitation {
 	
 	@ManyToOne
 	@JoinColumn(name = "idParticipant")
-	private User participant;
+	private EventParticipant eventParticipant;
 
 	public int getIdInvitation()
 	{
@@ -41,24 +38,14 @@ public class Invitation {
 		this.idInvitation = idInvitation;
 	}
 
-	public Event getEvent()
+	public EventParticipant getEventParticipant()
 	{
-		return event;
+		return eventParticipant;
 	}
 
-	public void setEvent(Event event)
+	public void setEventParticipant(EventParticipant eventParticipant)
 	{
-		this.event = event;
-	}
-
-	public User getParticipant()
-	{
-		return participant;
-	}
-
-	public void setParticipant(User participant)
-	{
-		this.participant = participant;
+		this.eventParticipant = eventParticipant;
 	}
 
 	public boolean isAccepted()

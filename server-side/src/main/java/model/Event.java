@@ -27,9 +27,6 @@ public class Event
 
 	@Column(name = "nrofseats")
 	private int nrOfSeats;
-
-	@Column(name = "nrofinvites")
-	private int nrOfInvites;
 	
 	@ManyToOne
 	@JoinColumn(name="idOrganizer")
@@ -85,21 +82,11 @@ public class Event
 		this.nrOfSeats = nrOfSeats;
 	}
 
-	public int getNrOfInvites()
-	{
-		return nrOfInvites;
-	}
-
-	public void setNrOfInvites(int nrOfInvites)
-	{
-		this.nrOfInvites = nrOfInvites;
-	}
-
 	@Override
 	public String toString()
 	{
 		return "Event [idEvent=" + idEvent + ", name=" + name + ", location=" + location + ", datetime=" + datetime
-				+ ", nrOfSeats=" + nrOfSeats + ", nrOfInvites=" + nrOfInvites + ", Organizer=" + user + "]";
+				+ ", nrOfSeats=" + nrOfSeats + ", Organizer=" + user + "]";
 	}
 
 	public User getUser()

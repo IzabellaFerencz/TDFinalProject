@@ -70,40 +70,23 @@ public class UserService
 
 	}
 
-	/**
-	 * This method is used for the user change events availability action. Receives
-	 * the new user data.
-	 * 
-	 * @param receivedData
-	 * @return no if there is already an account on that username, yes if the
-	 *         registration is a success.
-	 */
-//	public String changeAvailabiliy(String receivedData) {
-//		User user = gson.fromJson(receivedData, User.class);
-//		userDao = new UserDAO(User.class);
-//		String response = null;
-//		userDao.updateAvailability(user.getUserId(), user.getUsername());
-//		return response;
-//
-//	}
+	public String findUserByUsername(String receivedData)
+	{
+		String response = null;
+		User user = gson.fromJson(receivedData, User.class);
+		User loggedUser = userDao.findByUsername(user.getUsername());
+		
+		if (loggedUser != null)
+		{
+			response = gson.toJson(loggedUser);
+		}
+		else
+		{
+			response = "Fail";
+		}
 
-	/**
-	 * This method is used to bring all the logged user future events for witch he
-	 * accepted to go.
-	 * 
-	 * @param username
-	 * @return
-	 */
-//	public String getUserFutureEvents(String receivedData) {
-//		String response = null;
-//		User user = gson.fromJson(receivedData, User.class);
-//		eventDao = new EventDAO(Event.class);
-//		if (eventDao.getEventsId(user.getUserId()).size() > 0) {
-//			response = gson.toJson(eventDao.getEventsId(user.getUserId()));
-//			System.out.println("Am adus din baza de date EVENIMENTELE");
-//			System.out.println(eventDao.getEventsId(user.getUserId()).toString());
-//		} else
-//			response = "";
-//		return response;
-//	}
+		return response;
+	}
+
+
 }

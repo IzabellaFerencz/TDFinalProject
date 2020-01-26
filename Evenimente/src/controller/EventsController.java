@@ -65,7 +65,8 @@ public class EventsController extends BaseController implements Initializable
 			  username.setText("Hello, " + User.getUser().getUsername() +"!");		
 		  }
 		  loadEvents();
-		  addButtonToTable();
+		  addAvailableButtonToTable();
+		  addUnavailableButtonToTable();
 	}
 	
 	@FXML 
@@ -75,14 +76,26 @@ public class EventsController extends BaseController implements Initializable
 		redirect(event, "../fxml/LogInPage.fxml", 400, 400);
     }
 	
+	@FXML 
+    protected void getUsersInvites(ActionEvent event) 
+    {
+		redirect(event, "../fxml/InviteListPage.fxml", 800, 600);
+    }
+	
+	@FXML 
+    protected void getUsersNotifications(ActionEvent event) 
+    {
+		redirect(event, "../fxml/UserNotifications.fxml", 800, 600);
+    }
+	
 	@FXML
 	public void getEvents(ActionEvent event) throws ParseException 
 	{
 		loadEvents();
-		//addButtonToTable();
+		
 	}
 	
-	private void addButtonToTable() 
+	private void addAvailableButtonToTable() 
 	{
         TableColumn<EventModel, Void> colBtn = new TableColumn("Available");
 
@@ -121,6 +134,76 @@ public class EventsController extends BaseController implements Initializable
                                 {
                                 	loadEvents();
                                 }
+                            }
+                            
+                        });
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) 
+                    {
+                        super.updateItem(item, empty);
+                        
+                        if (empty) 
+                        {
+                            setGraphic(null);
+                        } 
+                        else 
+                        {
+                            setGraphic(btn);
+                        }
+                    }
+                };
+                return cell;
+            }
+        };
+
+        colBtn.setCellFactory(cellFactory);
+
+        events.getColumns().add(colBtn);
+
+    }
+	
+	private void addUnavailableButtonToTable() 
+	{
+        TableColumn<EventModel, Void> colBtn = new TableColumn("Not Available");
+
+        Callback<TableColumn<EventModel, Void>, TableCell<EventModel, Void>> cellFactory = new Callback<TableColumn<EventModel, Void>, TableCell<EventModel, Void>>() 
+        {
+        	@Override
+            public TableCell<EventModel, Void> call(final TableColumn<EventModel, Void> param)
+        	{ 
+        		
+                final TableCell<EventModel, Void> cell = new TableCell<EventModel, Void>() 
+                {                	
+                    private final Button btn = new Button("Set Unavailable");
+                    {
+                        btn.setOnAction((ActionEvent event) -> 
+                        {
+                        	EventModel data = getTableView().getItems().get(getIndex());
+                            System.out.println("selectedData: " + data);
+                            Gson gson = new Gson();
+                            Event eventObj = new Event();
+                            eventObj.setIdEvent(data.getId());
+                            if(getAvailability(eventObj))
+                            {
+                            	Map<String, Object> eventPartMap = new HashMap<String, Object>();
+                        		eventPartMap.put("participant", User.getUser());
+                        		eventPartMap.put("event", eventObj);
+                                String resp = sendToServer("removeEventsParticipant", gson.toJson(eventPartMap));
+                                if(resp.compareTo("Fail")==0)
+                                {
+                                	message.setText("Failed to set as unavailable!");
+                                }
+                                else
+                                {
+                                	loadEvents();
+                                }
+                            	
+                            }
+                            else
+                            {
+                            	message.setText("You are already set as unavailable!");
                             }
                             
                         });
@@ -191,7 +274,7 @@ public class EventsController extends BaseController implements Initializable
 				{
 					av="Not Available";
 				}
-				eventList.add(new EventModel(eventObj.getIdEvent(),eventObj.getName(), eventObj.getLocation(), eventObj.getDatetime(), eventObj.getNrOfSeats(), eventObj.getNrOfInvites(), eventObj.getUser().getUsername(), av));
+				eventList.add(new EventModel(eventObj.getIdEvent(),eventObj.getName(), eventObj.getLocation(), eventObj.getDatetime(), eventObj.getNrOfSeats(), eventObj.getUser().getUsername(), av));
 			}
 			this.eventsModels = FXCollections.observableList(eventList);
 			idCell.setCellValueFactory(new PropertyValueFactory<>("Id"));

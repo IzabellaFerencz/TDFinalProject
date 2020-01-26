@@ -27,10 +27,6 @@
        <Label text="Number of seats" GridPane.columnIndex="0" GridPane.rowIndex="4" />
     
        <TextField fx:id="seatsField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-       
-       <Label text="Number of invites" GridPane.columnIndex="0" GridPane.rowIndex="5" />
-    
-       <TextField fx:id="invitesField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
            
        <HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="6">
               <children>
@@ -39,7 +35,7 @@
    		</HBox>
       <Label fx:id="username" contentDisplay="RIGHT" prefHeight="21.0" prefWidth="169.0" text="Hello, " textAlignment="RIGHT" GridPane.columnIndex="1" />
       <Button mnemonicParsing="false" onAction="#handleCancel" text="Cancel" GridPane.rowIndex="6" />
-      <Label text="" fx:id="message" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+      <Label fx:id="message" text="" GridPane.columnIndex="1" GridPane.rowIndex="7" />
      
    </children>
    <columnConstraints>

@@ -16,7 +16,11 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -62,7 +66,9 @@ public class OrganizerEventsController extends BaseController implements Initial
 			  username.setText("Hello, " + User.getUser().getUsername() +"!");		
 		  }
 		  loadEvents();
-		  addButtonToTable();
+		  addParticipantButtonToTable();
+		  addEditButtonToTable();
+		  addDeleteButtonToTable();
 	}
 	
 	@FXML 
@@ -75,6 +81,7 @@ public class OrganizerEventsController extends BaseController implements Initial
 	@FXML 
     protected void handleNewEvent(ActionEvent event) 
     {
+		Event.setEvent(null);
 		redirect(event, "../fxml/NewEvent.fxml", 400, 400);
     }
 	
@@ -101,7 +108,7 @@ public class OrganizerEventsController extends BaseController implements Initial
 			ArrayList<EventModel> eventList = new ArrayList<>();
 			for (Event eventObj : listw)
 			{
-				eventList.add(new EventModel(eventObj.getIdEvent(),eventObj.getName(), eventObj.getLocation(), eventObj.getDatetime(), eventObj.getNrOfSeats(), eventObj.getNrOfInvites(), eventObj.getUser().getUsername(),""));
+				eventList.add(new EventModel(eventObj.getIdEvent(),eventObj.getName(), eventObj.getLocation(), eventObj.getDatetime(), eventObj.getNrOfSeats(), eventObj.getUser().getUsername(),""));
 			}
 			this.eventsModels = FXCollections.observableList(eventList);
 			idCell.setCellValueFactory(new PropertyValueFactory<>("Id"));
@@ -114,7 +121,7 @@ public class OrganizerEventsController extends BaseController implements Initial
 		}
 	}
 	
-	private void addButtonToTable() 
+	private void addParticipantButtonToTable() 
 	{
         TableColumn<EventModel, Void> colBtn = new TableColumn("Participants");
 
@@ -126,12 +133,19 @@ public class OrganizerEventsController extends BaseController implements Initial
         		
                 final TableCell<EventModel, Void> cell = new TableCell<EventModel, Void>() 
                 {                	
-                    private final Button btn = new Button("View Participants");
+                    private final Button btnView = new Button("View Participants");
                     {
-                        btn.setOnAction((ActionEvent event) -> 
+                    	btnView.setOnAction((ActionEvent event) -> 
                         {
-                        	redirect(event, "../fxml/ParticipantListPage.fxml", 700, 600);
-                            
+                        	EventModel data = getTableView().getItems().get(getIndex());
+                            Event eventObj = new Event();
+                            eventObj.setIdEvent(data.getId());
+                            eventObj.setDatetime(data.getDatetime());
+                            eventObj.setLocation(data.getLocation());
+                            eventObj.setName(data.getName());
+                            eventObj.setNrOfSeats(data.getNrOfSeats());
+                            Event.setEvent(eventObj);
+                        	redirect(event, "../fxml/ParticipantListPage.fxml", 700, 600);      
                         });
                     }
 
@@ -146,7 +160,7 @@ public class OrganizerEventsController extends BaseController implements Initial
                         } 
                         else 
                         {
-                            setGraphic(btn);
+                            setGraphic(btnView);
                         }
                     }
                 };
@@ -157,7 +171,134 @@ public class OrganizerEventsController extends BaseController implements Initial
         colBtn.setCellFactory(cellFactory);
 
         events.getColumns().add(colBtn);
-
     }
 	
+	private void addEditButtonToTable() 
+	{
+        TableColumn<EventModel, Void> colBtn = new TableColumn("Edit");
+
+        Callback<TableColumn<EventModel, Void>, TableCell<EventModel, Void>> cellFactory = new Callback<TableColumn<EventModel, Void>, TableCell<EventModel, Void>>() 
+        {
+        	@Override
+            public TableCell<EventModel, Void> call(final TableColumn<EventModel, Void> param)
+        	{ 
+        		
+                final TableCell<EventModel, Void> cell = new TableCell<EventModel, Void>() 
+                {                	
+                    private final Button btnView = new Button("Edit");
+                    {
+                    	btnView.setOnAction((ActionEvent event) -> 
+                        {
+                        	EventModel data = getTableView().getItems().get(getIndex());
+                            Event eventObj = new Event();
+                            eventObj.setIdEvent(data.getId());
+                            eventObj.setDatetime(data.getDatetime());
+                            eventObj.setLocation(data.getLocation());
+                            eventObj.setName(data.getName());
+                            eventObj.setNrOfSeats(data.getNrOfSeats());
+                            Event.setEvent(eventObj);
+                        	redirect(event, "../fxml/EditEvent.fxml", 500, 500);      
+                        });
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) 
+                    {
+                        super.updateItem(item, empty);
+                        
+                        if (empty) 
+                        {
+                            setGraphic(null);
+                        } 
+                        else 
+                        {
+                            setGraphic(btnView);
+                        }
+                    }
+                };
+                return cell;
+            }
+        };
+
+        colBtn.setCellFactory(cellFactory);
+
+        events.getColumns().add(colBtn);
+    }
+
+	private void addDeleteButtonToTable() 
+	{
+        TableColumn<EventModel, Void> colBtn = new TableColumn("Delete");
+
+        Callback<TableColumn<EventModel, Void>, TableCell<EventModel, Void>> cellFactory = new Callback<TableColumn<EventModel, Void>, TableCell<EventModel, Void>>() 
+        {
+        	@Override
+            public TableCell<EventModel, Void> call(final TableColumn<EventModel, Void> param)
+        	{ 
+        		
+                final TableCell<EventModel, Void> cell = new TableCell<EventModel, Void>() 
+                {                	
+                    private final Button btnView = new Button("Delete");
+                    {
+                    	btnView.setOnAction((ActionEvent event) -> 
+                        {
+                        	EventModel data = getTableView().getItems().get(getIndex());
+                            Event eventObj = new Event();
+                            eventObj.setIdEvent(data.getId());
+                            eventObj.setDatetime(data.getDatetime());
+                            eventObj.setLocation(data.getLocation());
+                            eventObj.setName(data.getName());
+                            eventObj.setNrOfSeats(data.getNrOfSeats());
+                            Event.setEvent(eventObj);
+                        	// TODO send to server and delete -> redirect to event list page    
+                            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                            alert.setTitle("Delete Event");
+                            alert.setContentText("Are you sure you want to delete?");
+                            ButtonType okButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+                            ButtonType noButton = new ButtonType("No", ButtonBar.ButtonData.NO);
+                            alert.getButtonTypes().setAll(okButton, noButton);
+                            alert.showAndWait().ifPresent(type -> {
+                                    if (type.getButtonData() == ButtonData.YES) 
+                                    {
+                                    	Gson gson = new Gson();
+                                    	String serverResponse = sendToServer("deleteEvent", gson.toJson(eventObj) );
+                                		if (serverResponse.compareTo("Fail")==0)
+                                		{
+                                				message.setText("Failed to delete event!");
+                                		}
+                                		else
+                                		{
+                                			redirect(event, "../fxml/OrganizerEventListPage.fxml", 1000, 600);
+                                		}
+                                    } 
+                                    else 
+                                    {
+                                    	
+                                    }
+                            		});
+                        	});
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) 
+                    {
+                        super.updateItem(item, empty);
+                        
+                        if (empty) 
+                        {
+                            setGraphic(null);
+                        } 
+                        else 
+                        {
+                            setGraphic(btnView);
+                        }
+                    }
+                };
+                return cell;
+            }
+        };
+
+        colBtn.setCellFactory(cellFactory);
+
+        events.getColumns().add(colBtn);
+    }
 }

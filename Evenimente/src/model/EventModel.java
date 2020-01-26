@@ -7,20 +7,18 @@ public class EventModel
 {
 	private SimpleIntegerProperty id;
 	private SimpleIntegerProperty nrOfSeats;
-	private SimpleIntegerProperty nrOfInvites;
     private SimpleStringProperty name;
     private SimpleStringProperty location;
     private SimpleStringProperty datetime;
     private SimpleStringProperty organizer;
     private SimpleStringProperty status;
     
-    public EventModel(int id, String name, String location, String date, int seats, int invites, String organizer, String status)
+    public EventModel(int id, String name, String location, String date, int seats, String organizer, String status)
     {
     	this.id = new SimpleIntegerProperty(id);
     	this.name = new SimpleStringProperty(name);
     	this.location = new SimpleStringProperty(location);
     	this.datetime = new SimpleStringProperty(date);
-    	this.nrOfInvites = new SimpleIntegerProperty(invites);
     	this.nrOfSeats = new SimpleIntegerProperty(seats);
     	this.organizer = new SimpleStringProperty(organizer);
     	this.status = new SimpleStringProperty(status);
@@ -54,14 +52,7 @@ public class EventModel
 	{
 		this.nrOfSeats = new SimpleIntegerProperty(nrOfSeats);
 	}
-	public int getNrOfInvites()
-	{
-		return nrOfInvites.get();
-	}
-	public void setNrOfInvites(int nrOfInvites)
-	{
-		this.nrOfInvites = new SimpleIntegerProperty(nrOfInvites);
-	}
+
 	public String getName()
 	{
 		return name.get();

@@ -41,10 +41,48 @@ public class EventParticipantService
 		return response;
 	}
 	
+	public String getParticipantsForEvent(String receivedData) 
+	{
+		String response = null;
+		Event ep = gson.fromJson(receivedData, Event.class);
+		List<EventParticipant> participants = eventPartDao.findParticipantsForEvent(ep);
+		
+		if (participants != null)
+		{
+			response = gson.toJson(participants);
+		}
+		else
+		{
+			response = "Fail";
+		}
+
+		return response;
+	}
+	
 	public String newEventParticipant(String receivedData)
 	{
 		EventParticipant eventPart = gson.fromJson(receivedData, EventParticipant.class);
 		boolean result = eventPartDao.create(eventPart);
+	
+		if(result) 
+		{
+			return "Success";
+		}
+		else
+		{
+			return "Fail";
+		}
+	}
+
+	public String deleteEventParticipant(String receivedData)
+	{
+		EventParticipant eventPart = gson.fromJson(receivedData, EventParticipant.class);
+		EventParticipant existingPart = eventPartDao.findByEventAndParticipant(eventPart.getParticipant(), eventPart.getEvent());
+		boolean result = false;
+		if(existingPart!=null)
+		{
+			result = eventPartDao.remove(existingPart, existingPart.getIdEventParticipant());
+		}
 	
 		if(result) 
 		{

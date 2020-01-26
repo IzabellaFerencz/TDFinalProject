@@ -1,24 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane alignment="center" hgap="10" prefHeight="405.0" prefWidth="347.0" vgap="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReservationController">
+<padding><Insets bottom="10" left="25" right="25" top="25" /></padding>
    <children>
-      <TitledPane animated="false" layoutX="-783.0" layoutY="-441.0" prefHeight="557.0" prefWidth="846.0" text="untitled">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-               <children>
-                  <Label layoutX="80.0" layoutY="101.0" text="Secret Code" />
-                  <TextField layoutX="219.0" layoutY="96.0" />
-                  <Hyperlink layoutX="75.0" layoutY="42.0" text="Open Instructions" />
-                  <Button layoutX="334.0" layoutY="184.0" mnemonicParsing="false" text="Reserve" />
-                  <Button layoutX="160.0" layoutY="184.0" mnemonicParsing="false" text="Decline Invitation" />
-               </children>
-            </AnchorPane>
-        </content>
-      </TitledPane>
+   	<Text text="Reserve" GridPane.columnSpan="2" />
+    
+       <Label text="Name" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+    
+       <Label fx:id="nameField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+       
+       <Label text="Location" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+    
+       <Label fx:id="locationField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+    
+       <Label text="Date and Time" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+    
+       <Label fx:id="datetimeField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+       
+       <Label text="Help File" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+    
+       <Label fx:id="fileField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+       
+       <Label text="Secret Code" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+    
+       <TextField fx:id="secretCodeField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+           
+       <HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="6">
+              <children>
+              <Button onAction="#handleReserve" text="Reserve" />
+              </children>
+   		</HBox>
+      <Label fx:id="username" contentDisplay="RIGHT" prefHeight="21.0" prefWidth="169.0" text="Hello, " textAlignment="RIGHT" GridPane.columnIndex="1" />
+      <Button mnemonicParsing="false" onAction="#handleCancel" text="Cancel" GridPane.rowIndex="6" />
+      <Label fx:id="message" text="" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+     
    </children>
-</AnchorPane>
+   <columnConstraints>
+      <ColumnConstraints />
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
+</GridPane>
