@@ -30,6 +30,8 @@ public class ReservationController extends BaseController implements Initializab
 	private Label datetimeField;
 	@FXML
 	private TextField secretCodeField;
+	@FXML
+	private Label message;
 	
 	@FXML 
     protected void handleCancel(ActionEvent event) 
@@ -49,11 +51,12 @@ public class ReservationController extends BaseController implements Initializab
 		String serverResponse = sendToServer("reserveInvitation", gson.toJson(invToReserve));
 		if(serverResponse.compareTo("Fail")==0)
 		{
-			System.out.println("Failed to reserve seat.");
+			message.setText("Failed to reserve seat. Check if secret code is correct! If secret code is correct we are sorry all seats are already booked!");
+			System.out.println("Failed to reserve seat. Check if secret code is correct! If secret code is correct we are sorry all seats are already booked!");
 		}
 		else
 		{
-			redirect(event,"../fxml/Success.fxml", 500, 500);
+			redirect(event,"../fxml/Success.fxml", 600, 500);
 		}
     }
 	

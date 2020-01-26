@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane prefHeight="510.0" prefWidth="717.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SuccessController">
+   <children>
+      <Pane layoutX="-4.0" layoutY="2.0" prefHeight="506.0" prefWidth="1034.0">
+         <children>
+            <Label layoutX="89.0" layoutY="116.0" text="Reservation Complete">
+               <font>
+                  <Font size="54.0" />
+               </font>
+            </Label>
+            <Label fx:id="seatNr" layoutX="140.0" layoutY="243.0" text="">
+               <font>
+                  <Font size="43.0" />
+               </font>
+            </Label>
+            <Button layoutX="140.0" layoutY="367.0" mnemonicParsing="false" onAction="#handleOK" text="OK" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

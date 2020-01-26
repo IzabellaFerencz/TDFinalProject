@@ -1,5 +1,6 @@
 package service;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -14,6 +15,7 @@ import dao.InvitationDAO;
 import model.Event;
 import model.EventParticipant;
 import model.Invitation;
+import model.Notification;
 import model.User;
 
 public class InvitationService
@@ -35,6 +37,13 @@ public class InvitationService
 	
 		if(result) 
 		{
+			NotificationsService notif = new NotificationsService();
+			Notification notification = new Notification();
+			notification.setMessage("You received a new invitation!");
+			notification.setUser(invitation.getEventParticipant().getParticipant());
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");  
+			notification.setDate(dateFormat.format(new Date(System.currentTimeMillis())));
+			notif.sendNotification(gson.toJson(notification));
 			return "Success";
 		}
 		else
@@ -94,10 +103,9 @@ public class InvitationService
 		
 		try
 		{
-			Date eventDate =new SimpleDateFormat("yyyy-MM-dd").parse(real.getEventParticipant().getEvent().getDatetime());
-			LocalDate currentLocalDate = java.time.LocalDate.now();
-			Date currentDate = new Date(currentLocalDate.getYear(), currentLocalDate.getMonthValue(), currentLocalDate.getDayOfMonth());
-			if(eventDate.compareTo(currentDate) > 0)
+			Date eventDate = new SimpleDateFormat("yyyy-MM-dd").parse(real.getEventParticipant().getEvent().getDatetime());
+			Date currentDate = new Date(System.currentTimeMillis());
+			if(eventDate.compareTo(currentDate) < 0)
 			{
 				System.out.println("Event is expired");
 				return "Fail";
@@ -113,7 +121,7 @@ public class InvitationService
 			}
 			return "Fail";
 		}
-		catch (ParseException e)
+		catch (Exception e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();

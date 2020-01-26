@@ -17,8 +17,8 @@
             <TableView id="invites" fx:id="notifications" layoutX="25.0" layoutY="123.0" prefHeight="331.0" prefWidth="601.0">
               <columns>
                 <TableColumn id="idCell" fx:id="idCell" prefWidth="41.0" text="Id" />
-                <TableColumn id="messageCell" fx:id="messageCell" prefWidth="102.0" text="Message" />
-                  <TableColumn id="dateCell" fx:id="dateCell" prefWidth="150.0" text="Date" />
+                <TableColumn id="messageCell" fx:id="messageCell" prefWidth="283.0" text="Message" />
+                  <TableColumn id="dateCell" fx:id="dateCell" prefWidth="123.0" text="Date" />
               </columns>
             </TableView>
             <Label fx:id="username" layoutX="716.0" layoutY="14.0" text="Hello, " />
