@@ -38,10 +38,19 @@ public class InvitationsController extends BaseController implements Initializab
 	@FXML 
     protected void handleSend(ActionEvent event) 
     {
+		String filePath = fileField.getText();
+		String secretCode = secretCodeField.getText();
+		
+		if(filePath.isEmpty() || secretCode.isEmpty())
+		{
+			message.setText("Help file and secret code must be specified!");
+			return;
+		}
+		
 		Invitation invite = new Invitation();
 		invite.setAccepted(false);
-		invite.setHelpFile(fileField.getText());
-		invite.setSecretCode(secretCodeField.getText());
+		invite.setHelpFile(filePath);
+		invite.setSecretCode(secretCode);
 		invite.setEventParticipant(EventParticipant.getEventParticipant());
 		Gson gson = new Gson();
 		String serverResponse = sendToServer("sendInvitation", gson.toJson(invite));

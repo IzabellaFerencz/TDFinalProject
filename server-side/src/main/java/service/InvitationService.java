@@ -121,6 +121,10 @@ public class InvitationService
 	{
 		Invitation inv = gson.fromJson(receivedData, Invitation.class);
 		Invitation real = (Invitation)invitationDao.find(inv.getIdInvitation());
+		if(real == null)
+		{
+			return "Invalid invitation specified";
+		}
 		
 		try
 		{
@@ -129,18 +133,18 @@ public class InvitationService
 			if(eventDate.compareTo(currentDate) < 0)
 			{
 				System.out.println("Event is expired");
-				return "Fail";
+				return "Event is expired";
 			}
 			if(inv.getSecretCode().compareTo(real.getSecretCode()) != 0)
 			{
 				System.out.println("Wrong secret code");
-				return "Fail";
+				return "Wrong secret code";
 			}
 			if(invitationDao.reserveInvitation(real))
 			{
 				return "Success";
 			}
-			return "Fail";
+			return "All seats are already booked, sorry";
 		}
 		catch (Exception e)
 		{

@@ -1,6 +1,8 @@
 package controller;
 
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -14,6 +16,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import model.Event;
 import model.User;
+import java.util.Date;
 
 public class EventCrudController extends BaseController implements Initializable
 {
@@ -38,6 +41,45 @@ public class EventCrudController extends BaseController implements Initializable
 		String location = locationField.getText();
 		String date = datetimeField.getText();
 		String seats = seatsField.getText();
+		
+		if(name.isEmpty())
+		{
+			message.setText("Name of the event must be specified!");
+			return;
+		}
+		if(location.isEmpty())
+		{
+			message.setText("Location of the event must be specified!");
+			return;
+		}
+		if(date.isEmpty())
+		{
+			message.setText("Date of the event must be specified!");
+			return;
+		}
+		try
+		{
+			Date eventDate = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+		} 
+		catch (ParseException e)
+		{
+			message.setText("Incorrect date format! Date should be in yyyy-MM-dd format");
+			return;
+		}
+		try
+		{
+			int nr = Integer.parseInt(seats);
+			if(nr <= 0)
+			{
+				message.setText("Nr of seats must be a positive number");
+				return;
+			}
+		} 
+		catch (NumberFormatException e)
+		{
+			message.setText("Please insert a number for the nr of seats value!");
+			return;
+		}
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("name", name);
@@ -73,6 +115,46 @@ public class EventCrudController extends BaseController implements Initializable
 		String location = locationField.getText();
 		String date = datetimeField.getText();
 		String seats = seatsField.getText();
+		
+		if(name.isEmpty())
+		{
+			message.setText("Name of the event must be specified!");
+			return;
+		}
+		if(location.isEmpty())
+		{
+			message.setText("Location of the event must be specified!");
+			return;
+		}
+		if(date.isEmpty())
+		{
+			message.setText("Date of the event must be specified!");
+			return;
+		}
+		try
+		{
+			Date eventDate = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+		} 
+		catch (ParseException e)
+		{
+			message.setText("Incorrect date format! Date should be in yyyy-MM-dd format");
+			return;
+		}
+		try
+		{
+			int nr = Integer.parseInt(seats);
+			if(nr <= 0)
+			{
+				message.setText("Nr of seats must be a positive number");
+				return;
+			}
+		} 
+		catch (NumberFormatException e)
+		{
+			message.setText("Please insert a number for the nr of seats value!");
+			return;
+		}
+		
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("idEvent", String.valueOf(Event.getEvent().getIdEvent()));
